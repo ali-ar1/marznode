@@ -39,7 +39,7 @@ You will be asked to provide a service port and the MarzNode certificate from th
 
 - xray:
     ```bash
-    https://raw.githubusercontent.com/ali-ar1/marznode1/main/xray_config.json
+    https://raw.githubusercontent.com/ali-ar1/marznode/main/xray_config.json
     ```
 - Stop the MarzNode service:
     ```bash
