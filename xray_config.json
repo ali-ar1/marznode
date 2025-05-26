@@ -31,181 +31,9 @@
     },
     "inbounds": [
         {
-            "tag": "vless + tcp",
+            "tag": "VLESS+HTTPUPGRADE+NONE+2052",
             "listen": "0.0.0.0",
-            "port": 2089,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "tcpSettings": {
-                    "header": {
-                        "type": "http",
-                        "request": {
-                            "method": "GET",
-                            "path": [
-                                "/"
-                            ],
-                            "headers": {
-                                "Host": [
-                                    "p30afzar.com"
-                                ]
-                            }
-                        },
-                        "response": {}
-                    }
-                },
-                "security": "none"
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls"
-                ]
-            }
-        },
-        {
-            "tag": "VLESS+XHTTP+TLS+2080",
-            "listen": "0.0.0.0",
-            "port": 2080,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none",
-                "fallbacks": []
-            },
-            "streamSettings": {
-                "network": "xhttp",
-                "security": "tls",
-                "externalProxy": [],
-                "tlsSettings": {
-                    "serverName": "",
-                    "minVersion": "1.2",
-                    "maxVersion": "1.3",
-                    "cipherSuites": "",
-                    "rejectUnknownSni": false,
-                    "disableSystemRoot": false,
-                    "enableSessionResumption": false,
-                    "certificates": [
-                        {
-                            "certificateFile": "/var/lib/marznode/certs/iran-moba.ir/fullchain.pem",
-                            "keyFile": "/var/lib/marznode/certs/iran-moba.ir/privkey.pem",
-                            "ocspStapling": 3600,
-                            "oneTimeLoading": false,
-                            "usage": "encipherment",
-                            "buildChain": false
-                        }
-                    ],
-                    "alpn": [
-                        "h3",
-                        "h2",
-                        "http/1.1"
-                    ],
-                    "settings": {
-                        "allowInsecure": false,
-                        "fingerprint": "chrome"
-                    }
-                },
-                "xhttpSettings": {
-                    "path": "Www.fast.com.live.sKornorth.com.Zula.ir?ed=2048",
-                    "host": "",
-                    "headers": {},
-                    "scMaxBufferedPosts": 30,
-                    "scMaxEachPostBytes": "1000000",
-                    "noSSEHeader": false,
-                    "xPaddingBytes": "100-1000",
-                    "mode": "auto"
-                }
-            },
-            "sniffing": {
-                "enabled": false,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": false,
-                "routeOnly": false
-            }
-        },
-        {
-            "tag": "VLESS XHTTP REALITY",
-            "listen": "0.0.0.0",
-            "port": 2253,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none",
-                "fallbacks": []
-            },
-            "streamSettings": {
-                "network": "xhttp",
-                "security": "reality",
-                "externalProxy": [],
-                "realitySettings": {
-                    "show": false,
-                    "xver": 0,
-                    "dest": "google.com:443",
-                    "serverNames": [
-                        "liveclasses.danteinlinea.com",
-                        "sip2.mobileyes.co.uk",
-                        "gccaasociados.com.py",
-                        "qa1-superadmin.binadox.com",
-                        "tuyacn.com",
-                        "fauxid.com",
-                        "germany.iran-moba.ir"
-                    ],
-                    "privateKey": "CEVTKPr1xqIGN0ZYDMmVnXNsHp2bKpnaxDPoPassLFg",
-                    "minClient": "",
-                    "maxClient": "",
-                    "maxTimediff": 0,
-                    "shortIds": [
-                        "a5786305aea9fb90",
-                        "b408ee2f83a8",
-                        "a1009382",
-                        "daa10b",
-                        "52f2852b1ef027",
-                        "0a77eb535d"
-                    ],
-                    "settings": {
-                        "publicKey": "ky-lVgOsZHJtY11ly0W2mTM_RLSLcKIUqv0Fc6K7ZTc",
-                        "fingerprint": "chrome",
-                        "serverName": "",
-                        "spiderX": "/"
-                    }
-                },
-                "xhttpSettings": {
-                    "path": "/",
-                    "host": "",
-                    "headers": {},
-                    "scMaxBufferedPosts": 30,
-                    "scMaxEachPostBytes": "1000000",
-                    "noSSEHeader": false,
-                    "xPaddingBytes": "100-1000",
-                    "mode": "auto"
-                }
-            },
-            "sniffing": {
-                "enabled": false,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": false,
-                "routeOnly": false
-            }
-        },
-        {
-            "tag": "VLESS + HTTPUPGRADE",
-            "listen": "0.0.0.0",
-            "port": 2095,
+            "port": 2052,
             "protocol": "vless",
             "settings": {
                 "clients": [],
@@ -213,59 +41,12 @@
             },
             "streamSettings": {
                 "network": "httpupgrade",
-                "httpupgradeSettings": {
-                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
-                    "Host": ""
-                },
-                "security": "none"
-            }
-        },
-        {
-            "tag": "VLESS + HTTPUPGRADE2",
-            "listen": "0.0.0.0",
-            "port": 2086,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "httpupgrade",
-                "httpupgradeSettings": {
-                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
-                    "Host": ""
-                },
-                "security": "none"
-            }
-        },
-        {
-            "tag": "SHADOWSOCKS + TCP,UDP",
-            "listen": "0.0.0.0",
-            "port": 1339,
-            "protocol": "shadowsocks",
-            "settings": {
-                "method": "chacha20-ietf-poly1305",
-                "password": "X0qA4DT5m2dYuQk3dEXfhNqb8NVZe+mpdx9BazTbWCw=",
-                "network": "tcp,udp",
-                "clients": [],
-                "ivCheck": false
-            },
-            "streamSettings": {
-                "network": "tcp",
                 "security": "none",
-                "externalProxy": [
-                    {
-                        "forceTls": "same",
-                        "dest": "",
-                        "port": 1339,
-                        "remark": ""
-                    }
-                ],
-                "tcpSettings": {
+                "httpupgradeSettings": {
                     "acceptProxyProtocol": false,
-                    "header": {
-                        "type": "none"
-                    }
+                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
+                    "host": "",
+                    "headers": {}
                 }
             },
             "sniffing": {
@@ -281,7 +62,7 @@
             }
         },
         {
-            "tag": "vless + ws",
+            "tag": "VLESS+HTTPUPGRADE+NONE+2082",
             "listen": "0.0.0.0",
             "port": 2082,
             "protocol": "vless",
@@ -290,22 +71,56 @@
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "ws",
-                "wsSettings": {
-                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2082",
-                    "headers": {
-                        "host": ""
-                    }
-                },
-                "security": "none"
+                "network": "httpupgrade",
+                "security": "none",
+                "httpupgradeSettings": {
+                    "acceptProxyProtocol": false,
+                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
+                    "host": "",
+                    "headers": {}
+                }
             },
             "sniffing": {
                 "enabled": true,
                 "destOverride": [
                     "http",
                     "tls",
+                    "quic",
                     "fakedns"
-                ]
+                ],
+                "metadataOnly": false,
+                "routeOnly": false
+            }
+        },
+        {
+            "tag": "VLESS+HTTPUPGRADE+NONE+8880",
+            "listen": "0.0.0.0",
+            "port": 8880,
+            "protocol": "vless",
+            "settings": {
+                "clients": [],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "httpupgrade",
+                "security": "none",
+                "httpupgradeSettings": {
+                    "acceptProxyProtocol": false,
+                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
+                    "host": "",
+                    "headers": {}
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "fakedns"
+                ],
+                "metadataOnly": false,
+                "routeOnly": false
             }
         },
         {
@@ -320,7 +135,7 @@
             "streamSettings": {
                 "network": "httpupgrade",
                 "httpupgradeSettings": {
-                    "path": "/Www.fast.com.live.sKornorth.com.Zula.ir?ed=2048",
+                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
                     "host": ""
                 },
                 "security": "none"
