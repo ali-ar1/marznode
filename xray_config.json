@@ -31,9 +31,9 @@
     },
     "inbounds": [
         {
-            "tag": "VLESS+HTTPUPGRADE+NONE+2052",
+            "tag": "VLESS+HTTPUPGRADE+NONE+8080",
             "listen": "0.0.0.0",
-            "port": 2052,
+            "port": 8080,
             "protocol": "vless",
             "settings": {
                 "clients": [],
@@ -44,52 +44,13 @@
                 "security": "none",
                 "httpupgradeSettings": {
                     "acceptProxyProtocol": false,
-                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
+                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
                     "host": "",
                     "headers": {}
                 }
             },
             "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": false,
-                "routeOnly": false
-            }
-        },
-        {
-            "tag": "VLESS+HTTPUPGRADE+NONE+2082",
-            "listen": "0.0.0.0",
-            "port": 2082,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "httpupgrade",
-                "security": "none",
-                "httpupgradeSettings": {
-                    "acceptProxyProtocol": false,
-                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
-                    "host": "",
-                    "headers": {}
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": false,
-                "routeOnly": false
+                "enabled": false
             }
         },
         {
@@ -106,27 +67,19 @@
                 "security": "none",
                 "httpupgradeSettings": {
                     "acceptProxyProtocol": false,
-                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
+                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
                     "host": "",
                     "headers": {}
                 }
             },
             "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": false,
-                "routeOnly": false
+                "enabled": false
             }
         },
         {
-            "tag": "vless httpupgrade notls",
+            "tag": "VLESS+HTTPUPGRADE+NONE+2052",
             "listen": "0.0.0.0",
-            "port": 8080,
+            "port": 2052,
             "protocol": "vless",
             "settings": {
                 "clients": [],
@@ -134,11 +87,62 @@
             },
             "streamSettings": {
                 "network": "httpupgrade",
+                "security": "none",
                 "httpupgradeSettings": {
+                    "acceptProxyProtocol": false,
                     "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
-                    "host": ""
-                },
-                "security": "none"
+                    "host": "",
+                    "headers": {}
+                }
+            },
+            "sniffing": {
+                "enabled": false
+            }
+        },
+        {
+            "tag": "VLESS+HTTPUPGRADE+NONE+2082",
+            "listen": "0.0.0.0",
+            "port": 2082,
+            "protocol": "vless",
+            "settings": {
+                "clients": [],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "httpupgrade",
+                "security": "none",
+                "httpupgradeSettings": {
+                    "acceptProxyProtocol": false,
+                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
+                    "host": "",
+                    "headers": {}
+                }
+            },
+            "sniffing": {
+                "enabled": false
+            }
+        },
+        {
+            "tag": "VLESS+HTTPUPGRADE+NONE+2095",
+            "listen": "0.0.0.0",
+            "port": 2095,
+            "protocol": "vless",
+            "settings": {
+                "clients": [],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "httpupgrade",
+                "security": "none",
+                "httpupgradeSettings": {
+                    "acceptProxyProtocol": false,
+                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
+                    "host": "",
+                    "headers": {}
+                }
+            },
+            "sniffing": {
+                "enabled": false
             }
         }
     ],
