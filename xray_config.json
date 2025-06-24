@@ -1,1 +1,177 @@
-
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "dns": {
+        "servers": [
+            "8.8.8.8",
+            "8.8.4.4",
+            "1.1.1.1",
+            "1.0.0.1"
+        ],
+        "queryStrategy": "ForceIPv4"
+    },
+    "routing": {
+        "domainStrategy": "AsIs",
+        "rules": [
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:private"
+                ],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "network": "udp",
+                "port": "443",
+                "outboundTag": "block"
+            }
+        ]
+    },
+    "inbounds": [
+        {
+            "tag": "vmess",
+            "listen": "0.0.0.0",
+            "port": 2088,
+            "protocol": "vmess",
+            "settings": {},
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {
+                    "header": {
+                        "type": "http",
+                        "response": {
+                            "version": "1.1",
+                            "status": "200",
+                            "reason": "OK",
+                            "headers": {
+                                "Content-Type": [
+                                    "application/octet-stream",
+                                    "video/mpeg",
+                                    "application/x-msdownload",
+                                    "text/html",
+                                    "application/x-shockwave-flash"
+                                ],
+                                "Transfer-Encoding": [
+                                    "chunked"
+                                ],
+                                "Connection": [
+                                    "keep-alive"
+                                ],
+                                "Pragma": "no-cache"
+                            }
+                        }
+                    }
+                },
+                "security": "none"
+            }
+        },
+        {
+            "tag": "VLESS+XHTTP+NONE+2065",
+            "listen": "0.0.0.0",
+            "port": 2065,
+            "protocol": "vless",
+            "settings": {
+                "clients": [],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "xhttp",
+                "security": "none",
+                "xhttpSettings": {
+                    "path": "/GaMeOpTiMiZeR?ed=2048",
+                    "host": "",
+                    "headers": {},
+                    "noSSEHeader": false,
+                    "xPaddingBytes": "100-1000",
+                    "mode": "auto"
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "fakedns"
+                ],
+                "metadataOnly": false,
+                "routeOnly": false
+            }
+        },
+        {
+            "tag": "VLESS + HTTPUPGRADE",
+            "listen": "0.0.0.0",
+            "port": 2095,
+            "protocol": "vless",
+            "settings": {
+                "clients": [],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "httpupgrade",
+                "httpupgradeSettings": {
+                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
+                    "Host": ""
+                },
+                "security": "none"
+            }
+        },
+        {
+            "tag": "SHADOWSOCKS + TCP,UDP",
+            "listen": "0.0.0.0",
+            "port": 1339,
+            "protocol": "shadowsocks",
+            "settings": {
+                "method": "chacha20-ietf-poly1305",
+                "password": "X0qA4DT5m2dYuQk3dEXfhNqb8NVZe+mpdx9BazTbWCw=",
+                "network": "tcp,udp",
+                "clients": [],
+                "ivCheck": false
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "none",
+                "externalProxy": [
+                    {
+                        "forceTls": "same",
+                        "dest": "",
+                        "port": 1339,
+                        "remark": ""
+                    }
+                ],
+                "tcpSettings": {
+                    "acceptProxyProtocol": false,
+                    "header": {
+                        "type": "none"
+                    }
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "fakedns"
+                ],
+                "metadataOnly": false,
+                "routeOnly": false
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "DIRECT",
+            "settings": {
+                "domainStrategy": "ForceIPv4"
+            }
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
+        }
+    ]
+}
