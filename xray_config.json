@@ -33,7 +33,7 @@
         {
             "tag": "vmess",
             "listen": "0.0.0.0",
-            "port": 2088,
+            "port": 2089,
             "protocol": "vmess",
             "settings": {},
             "streamSettings": {
@@ -68,24 +68,19 @@
             }
         },
         {
-            "tag": "VLESS+XHTTP+NONE+2065",
+            "tag": "TROJAN+GRPC+NONE+2096",
             "listen": "0.0.0.0",
-            "port": 2065,
-            "protocol": "vless",
+            "port": 2096,
+            "protocol": "trojan",
             "settings": {
-                "clients": [],
-                "decryption": "none"
+                "clients": []
             },
             "streamSettings": {
-                "network": "xhttp",
+                "network": "grpc",
                 "security": "none",
-                "xhttpSettings": {
-                    "path": "/GaMeOpTiMiZeR?ed=2048",
-                    "host": "",
-                    "headers": {},
-                    "noSSEHeader": false,
-                    "xPaddingBytes": "100-1000",
-                    "mode": "auto"
+                "grpcSettings": {
+                    "serviceName": "yourServiceName",
+                    "multiMode": false
                 }
             },
             "sniffing": {
@@ -101,22 +96,22 @@
             }
         },
         {
-            "tag": "VLESS+TCP+NONE+2089",
+            "tag": "VLESS+HTTPUPGRADE+NONE+8080",
             "listen": "0.0.0.0",
-            "port": 2089,
+            "port": 8080,
             "protocol": "vless",
             "settings": {
                 "clients": [],
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "tcp",
+                "network": "httpupgrade",
                 "security": "none",
-                "tcpSettings": {
+                "httpupgradeSettings": {
                     "acceptProxyProtocol": false,
-                    "header": {
-                        "type": "none"
-                    }
+                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
+                    "host": "",
+                    "headers": {}
                 }
             },
             "sniffing": {
@@ -124,36 +119,22 @@
             }
         },
         {
-            "tag": "VLESS+TCP+iliya+2401",
+            "tag": "VLESS+HTTPUPGRADE+NONE+8880",
             "listen": "0.0.0.0",
-            "port": 2401,
+            "port": 8880,
             "protocol": "vless",
             "settings": {
                 "clients": [],
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "tcp",
+                "network": "httpupgrade",
                 "security": "none",
-                "tcpSettings": {
+                "httpupgradeSettings": {
                     "acceptProxyProtocol": false,
-                    "header": {
-                        "type": "http",
-                        "request": {
-                            "version": "1.1",
-                            "method": "GET",
-                            "path": [
-                                "/"
-                            ],
-                            "headers": {}
-                        },
-                        "response": {
-                            "version": "1.1",
-                            "status": "200",
-                            "reason": "OK",
-                            "headers": {}
-                        }
-                    }
+                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
+                    "host": "",
+                    "headers": {}
                 }
             },
             "sniffing": {
@@ -161,36 +142,22 @@
             }
         },
         {
-            "tag": "VLESS+TCP+ar+2301",
+            "tag": "VLESS+HTTPUPGRADE+NONE+2052",
             "listen": "0.0.0.0",
-            "port": 2301,
+            "port": 2052,
             "protocol": "vless",
             "settings": {
                 "clients": [],
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "tcp",
+                "network": "httpupgrade",
                 "security": "none",
-                "tcpSettings": {
+                "httpupgradeSettings": {
                     "acceptProxyProtocol": false,
-                    "header": {
-                        "type": "http",
-                        "request": {
-                            "version": "1.1",
-                            "method": "GET",
-                            "path": [
-                                "/"
-                            ],
-                            "headers": {}
-                        },
-                        "response": {
-                            "version": "1.1",
-                            "status": "200",
-                            "reason": "OK",
-                            "headers": {}
-                        }
-                    }
+                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
+                    "host": "",
+                    "headers": {}
                 }
             },
             "sniffing": {
@@ -198,9 +165,9 @@
             }
         },
         {
-            "tag": "VLESS XHTTP REALITY",
+            "tag": "VLESS XHTTP NOTLS",
             "listen": "0.0.0.0",
-            "port": 2081,
+            "port": 2056,
             "protocol": "vless",
             "settings": {
                 "clients": [],
@@ -209,36 +176,10 @@
             },
             "streamSettings": {
                 "network": "xhttp",
-                "security": "reality",
+                "security": "none",
                 "externalProxy": [],
-                "realitySettings": {
-                    "show": false,
-                    "xver": 0,
-                    "dest": "google.com:443",
-                    "serverNames": [
-                        "refersion.com"
-                    ],
-                    "privateKey": "OG8Ldne3H2YZoy3wm_wmIUE_u0sg92e2ziRmmCF4zXk",
-                    "minClient": "",
-                    "maxClient": "",
-                    "maxTimediff": 0,
-                    "shortIds": [
-                        "a5786305aea9fb90",
-                        "b408ee2f83a8",
-                        "a1009382",
-                        "daa10b",
-                        "52f2852b1ef027",
-                        "0a77eb535d"
-                    ],
-                    "settings": {
-                        "publicKey": "bYk3swidbqncfIDDsYQibVYMmOinnxS0vT3cf_VnLAM",
-                        "fingerprint": "firefox",
-                        "serverName": "",
-                        "spiderX": "/www.python.org/downloads"
-                    }
-                },
                 "xhttpSettings": {
-                    "path": "/Www.fast.com.live.sKornorth.com.Zula.ir?ed=2048",
+                    "path": "/",
                     "host": "",
                     "headers": {},
                     "scMaxBufferedPosts": 30,
@@ -261,108 +202,7 @@
             }
         },
         {
-            "tag": "VLESS + HTTPUPGRADE",
-            "listen": "0.0.0.0",
-            "port": 2095,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "httpupgrade",
-                "httpupgradeSettings": {
-                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
-                    "Host": ""
-                },
-                "security": "none"
-            }
-        },
-        {
-            "tag": "VLESS + HTTPUPGRADE2",
-            "listen": "0.0.0.0",
-            "port": 2086,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "httpupgrade",
-                "httpupgradeSettings": {
-                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN?ed=2048",
-                    "Host": ""
-                },
-                "security": "none"
-            }
-        },
-        {
-            "tag": "VLESS+WS+NONE+8010",
-            "listen": "0.0.0.0",
-            "port": 8010,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                    "acceptProxyProtocol": false,
-                    "path": "/",
-                    "host": "",
-                    "headers": {}
-                }
-            },
-            "sniffing": {
-                "enabled": false
-            }
-        },
-        {
-            "tag": "SHADOWSOCKS + TCP,UDP",
-            "listen": "0.0.0.0",
-            "port": 1339,
-            "protocol": "shadowsocks",
-            "settings": {
-                "method": "chacha20-ietf-poly1305",
-                "password": "X0qA4DT5m2dYuQk3dEXfhNqb8NVZe+mpdx9BazTbWCw=",
-                "network": "tcp,udp",
-                "clients": [],
-                "ivCheck": false
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "none",
-                "externalProxy": [
-                    {
-                        "forceTls": "same",
-                        "dest": "",
-                        "port": 1339,
-                        "remark": ""
-                    }
-                ],
-                "tcpSettings": {
-                    "acceptProxyProtocol": false,
-                    "header": {
-                        "type": "none"
-                    }
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": false,
-                "routeOnly": false
-            }
-        },
-        {
-            "tag": "VLESS + HTTPUPGRADE3",
+            "tag": "VLESS+HTTPUPGRADE+NONE+2082",
             "listen": "0.0.0.0",
             "port": 2082,
             "protocol": "vless",
@@ -372,11 +212,16 @@
             },
             "streamSettings": {
                 "network": "httpupgrade",
+                "security": "none",
                 "httpupgradeSettings": {
-                    "path": "/egram---AR_ore--tem--ar_sre--egram--AR_st_n--tegram--ar_orE_pn--tgram----aR_tre_pN",
-                    "Host": ""
-                },
-                "security": "none"
+                    "acceptProxyProtocol": false,
+                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
+                    "host": "",
+                    "headers": {}
+                }
+            },
+            "sniffing": {
+                "enabled": false
             }
         }
     ],
@@ -386,6 +231,24 @@
             "tag": "DIRECT",
             "settings": {
                 "domainStrategy": "ForceIPv4"
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1440,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "UseIPv4",
+                "dialerProxy": "",
+                "acceptProxyProtocol": true,
+                "tcpKeepAliveInterval": 60,
+                "tcpKeepAliveIdle": 300,
+                "tcpUserTimeout": 10000,
+                "tcpCongestion": "bbr",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 600,
+                "tcpMptcp": false,
+                "tcpNoDelay": true
             }
         },
         {
