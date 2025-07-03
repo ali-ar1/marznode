@@ -11,6 +11,26 @@
         ],
         "queryStrategy": "ForceIPv4"
     },
+    "policy": {
+        "levels": {
+            "0": {
+                "handshake": 2,
+                "connIdle": 120,
+                "uplinkOnly": 4,
+                "downlinkOnly": 5,
+                "bufferSize": 16,
+                "statsUserUplink": true,
+                "statsUserDownlink": true,
+                "statsUserOnline": true
+            }
+        },
+        "system": {
+            "statsInboundUplink": true,
+            "statsInboundDownlink": true,
+            "statsOutboundUplink": true,
+            "statsOutboundDownlink": true
+        }
+    },
     "routing": {
         "domainStrategy": "AsIs",
         "rules": [
@@ -30,71 +50,6 @@
         ]
     },
     "inbounds": [
-        {
-            "tag": "vmess",
-            "listen": "0.0.0.0",
-            "port": 2089,
-            "protocol": "vmess",
-            "settings": {},
-            "streamSettings": {
-                "network": "tcp",
-                "tcpSettings": {
-                    "header": {
-                        "type": "http",
-                        "response": {
-                            "version": "1.1",
-                            "status": "200",
-                            "reason": "OK",
-                            "headers": {
-                                "Content-Type": [
-                                    "application/octet-stream",
-                                    "video/mpeg",
-                                    "application/x-msdownload",
-                                    "text/html",
-                                    "application/x-shockwave-flash"
-                                ],
-                                "Transfer-Encoding": [
-                                    "chunked"
-                                ],
-                                "Connection": [
-                                    "keep-alive"
-                                ],
-                                "Pragma": "no-cache"
-                            }
-                        }
-                    }
-                },
-                "security": "none"
-            }
-        },
-        {
-            "tag": "TROJAN+GRPC+NONE+2096",
-            "listen": "0.0.0.0",
-            "port": 2096,
-            "protocol": "trojan",
-            "settings": {
-                "clients": []
-            },
-            "streamSettings": {
-                "network": "grpc",
-                "security": "none",
-                "grpcSettings": {
-                    "serviceName": "yourServiceName",
-                    "multiMode": false
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": false,
-                "routeOnly": false
-            }
-        },
         {
             "tag": "VLESS+HTTPUPGRADE+NONE+8080",
             "listen": "0.0.0.0",
@@ -116,6 +71,24 @@
             },
             "sniffing": {
                 "enabled": false
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
             }
         },
         {
@@ -139,6 +112,24 @@
             },
             "sniffing": {
                 "enabled": false
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
             }
         },
         {
@@ -162,6 +153,24 @@
             },
             "sniffing": {
                 "enabled": false
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
             }
         },
         {
@@ -199,6 +208,24 @@
                 ],
                 "metadataOnly": false,
                 "routeOnly": false
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
             }
         },
         {
@@ -222,6 +249,24 @@
             },
             "sniffing": {
                 "enabled": false
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
             }
         }
     ],
@@ -231,24 +276,6 @@
             "tag": "DIRECT",
             "settings": {
                 "domainStrategy": "ForceIPv4"
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1440,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "UseIPv4",
-                "dialerProxy": "",
-                "acceptProxyProtocol": true,
-                "tcpKeepAliveInterval": 60,
-                "tcpKeepAliveIdle": 300,
-                "tcpUserTimeout": 10000,
-                "tcpCongestion": "bbr",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 600,
-                "tcpMptcp": false,
-                "tcpNoDelay": true
             }
         },
         {
