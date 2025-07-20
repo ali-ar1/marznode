@@ -179,14 +179,16 @@ services:
     container_name: marzneshin-marznode-1
     restart: always
     network_mode: host
-    command: ["sh", "-c", "sleep 10 && python3 marznode.py"]
+    command: [ "sh", "-c", "sleep 10 && python3 marznode.py" ]
     environment:
       SERVICE_PORT: "$port"
       XRAY_RESTART_ON_FAILURE: "True"
       XRAY_RESTART_ON_FAILURE_INTERVAL: "5"
+      XRAY_VLESS_REALITY_FLOW: "xtls-rprx-vision"
       XRAY_EXECUTABLE_PATH: "/var/lib/marznode/xray"
       XRAY_ASSETS_PATH: "/var/lib/marznode/data"
       XRAY_CONFIG_PATH: "/var/lib/marznode/xray_config.json"
+      SING_BOX_EXECUTABLE_PATH: "/usr/local/bin/sing-box"
       HYSTERIA_EXECUTABLE_PATH: "/usr/local/bin/hysteria"
       SSL_CLIENT_CERT_FILE: "/var/lib/marznode/client.pem"
       SSL_KEY_FILE: "./server.key"
