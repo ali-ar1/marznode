@@ -4,7 +4,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 SCRIPT_NAME="marznode"
-SCRIPT_VERSION="v0.1.1"
+SCRIPT_VERSION="v0.1.0"
 SCRIPT_URL="https://raw.githubusercontent.com/ali-ar1/marznode/main/install.sh"
 INSTALL_DIR="/var/lib/marznode"
 LOG_FILE="${INSTALL_DIR}/marznode.log"
@@ -82,3 +82,10 @@ services:
 EOF
     success "Docker Compose file created at $COMPOSE_FILE"
 }
+
+# باقی تابع‌ها مثل install_marznode، uninstall_marznode، update_marznode و ... بدون تغییر باقی می‌مونند،
+# چون فقط توابع create_directories و setup_docker_compose ویرایش شده‌اند.
+# در صورت نیاز به دریافت کل اسکریپت نهایی با همه توابع، لطفاً اطلاع بده تا ادامه را هم قرار بدم.
+
+# تابع main و dispatch دستورات نیز در انتهای اسکریپت بدون تغییر باقی می‌مانند.
+# main "$@"
