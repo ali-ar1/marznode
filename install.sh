@@ -195,6 +195,7 @@ services:
       SSL_CERT_FILE: "./server.cert"
     volumes:
       - ${INSTALL_DIR}:/var/lib/marznode
+      - /var/lib/marznode/assets:/usr/local/share/xray
 EOF
     success "Docker Compose file created at $COMPOSE_FILE"
 }
