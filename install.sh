@@ -4,7 +4,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 SCRIPT_NAME="marznode"
-SCRIPT_VERSION="v0.1.0"
+SCRIPT_VERSION="v0.1.2"
 SCRIPT_URL="https://raw.githubusercontent.com/ali-ar1/marznode/main/install.sh"
 INSTALL_DIR="/var/lib/marznode"
 LOG_FILE="${INSTALL_DIR}/marznode.log"
@@ -82,7 +82,10 @@ is_installed() { [[ -d "$INSTALL_DIR" && -f "$COMPOSE_FILE" ]]; }
 is_running() { docker ps | grep -q "marzneshin-marznode-1"; }
 
 create_directories() {
-    mkdir -p "$INSTALL_DIR" "${INSTALL_DIR}/data"
+    mkdir -p "$INSTALL_DIR" "${INSTALL_DIR}/data" "${INSTALL_DIR}/assets"
+    wget -O /var/lib/marznode/assets/geosite.dat https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat
+    wget -O /var/lib/marznode/assets/geoip.dat https://github.com/v2fly/geoip/releases/latest/download/geoip.dat
+    wget -O /var/lib/marznode/assets/iran.dat https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/iran.dat
 }
 
 get_certificate() {
