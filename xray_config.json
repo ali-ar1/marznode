@@ -31,58 +31,58 @@
             "statsOutboundDownlink": true
         }
     },
-"routing": {
-  "domainStrategy": "IPIfNonMatch",
-  "rules": [
-    {
-      "type": "field",
-      "outboundTag": "blackhole",
-      "ip": [
-        "geoip:private",
-        "geoip:ir"
-      ]
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "outboundTag": "blackhole",
+                "ip": [
+                    "geoip:private",
+                    "geoip:ir"
+                ]
+            },
+            {
+                "type": "field",
+                "port": 53,
+                "network": "tcp,udp",
+                "outboundTag": "DNS-Internal"
+            },
+            {
+                "type": "field",
+                "outboundTag": "blackhole",
+                "protocol": [
+                    "bittorrent"
+                ]
+            },
+            {
+                "outboundTag": "blackhole",
+                "domain": [
+                    "regexp:.*\\.ir$",
+                    "ext:iran.dat:ir",
+                    "ext:iran.dat:other",
+                    "geosite:category-ir",
+                    "blogfa",
+                    "bank",
+                    "tebyan.net",
+                    "beytoote.com",
+                    "Film2movie.ws",
+                    "Setare.com",
+                    "downloadha.com",
+                    "Sanjesh.org"
+                ],
+                "type": "field"
+            },
+            {
+                "type": "field",
+                "network": "udp",
+                "port": "443",
+                "outboundTag": "block"
+            }
+        ]
     },
-    {
-      "type": "field",
-      "port": 53,
-      "network": "tcp,udp",
-      "outboundTag": "DNS-Internal"
-    },
-    {
-      "type": "field",
-      "outboundTag": "blackhole",
-      "protocol": [
-        "bittorrent"
-      ]
-    },
-    {
-      "outboundTag": "blackhole",
-      "domain": [
-        "regexp:.*\\.ir$",
-        "ext:iran.dat:ir",
-        "ext:iran.dat:other",
-        "geosite:category-ir",
-        "blogfa",
-        "bank",
-        "tebyan.net",
-        "beytoote.com",
-        "Film2movie.ws",
-        "Setare.com",
-        "downloadha.com",
-        "Sanjesh.org"
-      ],
-      "type": "field"
-    },
-    {
-      "type": "field",
-      "network": "udp",
-      "port": "443",
-      "outboundTag": "block"
-    }
-  ]
-},
     "inbounds": [
-        {
+            {
             "tag": "vmess",
             "listen": "0.0.0.0",
             "port": 2088,
@@ -138,6 +138,73 @@
             }
         },
         {
+            "tag": "VLESS+TCP+NONE+80",
+            "listen": "0.0.0.0",
+            "port": 80,
+            "protocol": "vless",
+            "settings": {
+                "clients": [],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "none",
+                "tcpSettings": {
+                    "acceptProxyProtocol": false,
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "version": "1.1",
+                            "method": "GET",
+                            "path": [
+                                "/"
+                            ],
+                            "headers": {
+                                "Header1": [
+                                    "varzesh3.com"
+                                ],
+                                "Header2": [
+                                    "telewebion.com"
+                                ],
+                                "Header3": [
+                                    "zula.ir"
+                                ]
+                            }
+                        },
+                        "response": {
+                            "version": "1.1",
+                            "status": "200",
+                            "reason": "OK",
+                            "headers": {}
+                        }
+                    }
+                }
+            },
+              "sniffing": {
+    "enabled": true,
+    "metadataOnly": true,
+    "routeOnly": true
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
+            }
+        },
+        {
             "tag": "VLESS+GRPC+NONE+2060",
             "listen": "0.0.0.0",
             "port": 2060,
@@ -154,8 +221,10 @@
                     "multiMode": false
                 }
             },
-            "sniffing": {
-                "enabled": false
+              "sniffing": {
+    "enabled": true,
+    "metadataOnly": true,
+    "routeOnly": true
             },
             "sockopt": {
                 "mark": 0,
@@ -197,16 +266,10 @@
                     "mode": "auto"
                 }
             },
-            "sniffing": {
-                "enabled": false,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": false,
-                "routeOnly": false
+              "sniffing": {
+    "enabled": true,
+    "metadataOnly": true,
+    "routeOnly": true
             },
             "sockopt": {
                 "mark": 0,
@@ -248,15 +311,15 @@
                     "serverNames": [
                         "refersion.com"
                     ],
-                    "privateKey": "WGRSldNUSLdZHv-2uwtdn5ubtfYfckQZzE7VB1PBnXI",
+                    "privateKey": "cJyqzKX3B_FPK37BgcR_Cshom8mf9fItTqXFpAS_zEM",
                     "minClient": "",
                     "maxClient": "",
                     "maxTimediff": 0,
                     "shortIds": [
-                        "1e5f040eb8eb7303"
+                        "3cb9e03752a3f21e"
                     ],
                     "settings": {
-                        "publicKey": "bhMaI5WighoHZiRkNsv3ccklOBdcn407sklDOdCnenw",
+                        "publicKey": "_tdmxGe4rFnU-5QKnqh6vKa82emblrvnD6I3vy9ljWQ",
                         "fingerprint": "firefox",
                         "serverName": "",
                         "spiderX": "/www.python.org/downloads"
@@ -273,16 +336,10 @@
                     "mode": "auto"
                 }
             },
-            "sniffing": {
-                "enabled": false,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": false,
-                "routeOnly": false
+              "sniffing": {
+    "enabled": true,
+    "metadataOnly": true,
+    "routeOnly": true
             },
             "sockopt": {
                 "mark": 0,
@@ -322,8 +379,10 @@
                     "headers": {}
                 }
             },
-            "sniffing": {
-                "enabled": false
+              "sniffing": {
+    "enabled": true,
+    "metadataOnly": true,
+    "routeOnly": true
             },
             "sockopt": {
                 "mark": 0,
@@ -363,8 +422,10 @@
                     "headers": {}
                 }
             },
-            "sniffing": {
-                "enabled": false
+              "sniffing": {
+    "enabled": true,
+    "metadataOnly": true,
+    "routeOnly": true
             },
             "sockopt": {
                 "mark": 0,
@@ -397,8 +458,10 @@
                 "clients": [],
                 "ivCheck": true
             },
-            "sniffing": {
-                "enabled": false
+              "sniffing": {
+    "enabled": true,
+    "metadataOnly": true,
+    "routeOnly": true
             },
             "sockopt": {
                 "mark": 0,
@@ -430,7 +493,7 @@
         },
         {
             "protocol": "blackhole",
-            "tag": "block"
+            "tag": "blackhole"
         }
     ]
 }
