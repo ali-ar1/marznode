@@ -36,17 +36,6 @@
         "rules": [
             {
                 "type": "field",
-                "domain": [
-                    "full:arv.farzanofficefurniture.ir",
-                    "full:farzanofficefurniture.ir"
-                ],
-                "ip": [
-                    "85.133.199.215"
-                ],
-                "outboundTag": "DIRECT"
-            },
-            {
-                "type": "field",
                 "outboundTag": "blackhole",
                 "ip": [
                     "geoip:private",
@@ -83,12 +72,6 @@
                     "Sanjesh.org"
                 ],
                 "type": "field"
-            },
-            {
-                "type": "field",
-                "network": "udp",
-                "port": "443",
-                "outboundTag": "block"
             }
         ]
     },
@@ -149,73 +132,6 @@
             }
         },
         {
-            "tag": "VLESS+TCP+NONE+80",
-            "listen": "0.0.0.0",
-            "port": 80,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "none",
-                "tcpSettings": {
-                    "acceptProxyProtocol": false,
-                    "header": {
-                        "type": "http",
-                        "request": {
-                            "version": "1.1",
-                            "method": "GET",
-                            "path": [
-                                "/"
-                            ],
-                            "headers": {
-                                "Header1": [
-                                    "varzesh3.com"
-                                ],
-                                "Header2": [
-                                    "telewebion.com"
-                                ],
-                                "Header3": [
-                                    "zula.ir"
-                                ]
-                            }
-                        },
-                        "response": {
-                            "version": "1.1",
-                            "status": "200",
-                            "reason": "OK",
-                            "headers": {}
-                        }
-                    }
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        },
-        {
             "tag": "VLESS+GRPC+NONE+2060",
             "listen": "0.0.0.0",
             "port": 2060,
@@ -233,9 +149,7 @@
                 }
             },
             "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
+                "enabled": false
             },
             "sockopt": {
                 "mark": 0,
@@ -278,9 +192,15 @@
                 }
             },
             "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
+                "enabled": false,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "fakedns"
+                ],
+                "metadataOnly": false,
+                "routeOnly": false
             },
             "sockopt": {
                 "mark": 0,
@@ -322,15 +242,15 @@
                     "serverNames": [
                         "refersion.com"
                     ],
-                    "privateKey": "cJyqzKX3B_FPK37BgcR_Cshom8mf9fItTqXFpAS_zEM",
+                    "privateKey": "WGRSldNUSLdZHv-2uwtdn5ubtfYfckQZzE7VB1PBnXI",
                     "minClient": "",
                     "maxClient": "",
                     "maxTimediff": 0,
                     "shortIds": [
-                        "3cb9e03752a3f21e"
+                        "1e5f040eb8eb7303"
                     ],
                     "settings": {
-                        "publicKey": "_tdmxGe4rFnU-5QKnqh6vKa82emblrvnD6I3vy9ljWQ",
+                        "publicKey": "bhMaI5WighoHZiRkNsv3ccklOBdcn407sklDOdCnenw",
                         "fingerprint": "firefox",
                         "serverName": "",
                         "spiderX": "/www.python.org/downloads"
@@ -348,9 +268,15 @@
                 }
             },
             "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
+                "enabled": false,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "fakedns"
+                ],
+                "metadataOnly": false,
+                "routeOnly": false
             },
             "sockopt": {
                 "mark": 0,
@@ -391,9 +317,7 @@
                 }
             },
             "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
+                "enabled": false
             },
             "sockopt": {
                 "mark": 0,
@@ -434,9 +358,7 @@
                 }
             },
             "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
+                "enabled": false
             },
             "sockopt": {
                 "mark": 0,
@@ -470,9 +392,7 @@
                 "ivCheck": true
             },
             "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
+                "enabled": false
             },
             "sockopt": {
                 "mark": 0,
@@ -495,15 +415,6 @@
         }
     ],
     "outbounds": [
-        {
-            "protocol": "dns",
-            "tag": "DNS-Internal",
-            "settings": {
-                "address": "8.8.8.8",
-                "port": 53,
-                "network": "tcp,udp"
-            }
-        },
         {
             "protocol": "freedom",
             "tag": "DIRECT",
