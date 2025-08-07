@@ -4,32 +4,41 @@ set -euo pipefail
 IFS=$'\n\t'
 
 SCRIPT_NAME="marznode"
-SCRIPT_VERSION="v0.1.3"
+SCRIPT_VERSION="v0.1.4"
 SCRIPT_URL="https://raw.githubusercontent.com/ali-ar1/marznode/main/install.sh"
 INSTALL_DIR="/var/lib/marznode"
 LOG_FILE="${INSTALL_DIR}/marznode.log"
 COMPOSE_FILE="${INSTALL_DIR}/docker-compose.yml"
 GITHUB_REPO="https://github.com/marzneshin/marznode.git"
 GITHUB_API="https://api.github.com/repos/XTLS/Xray-core/releases"
-
-declare -r -A COLORS=(
-    [RED]='\033[0;31m'
-    [GREEN]='\033[0;32m'
-    [YELLOW]='\033[0;33m'
-    [BLUE]='\033[0;34m'
-    [PURPLE]='\033[0;35m'
-    [CYAN]='\033[0;36m'
-    [RESET]='\033[0m'
-)
-
-DEPENDENCIES=(
-    "docker"
-    "curl"
-    "wget"
-    "unzip"
-    "git"
-    "jq"
-)
+DEFAULT_XRAY_CONFIG_URL="https://raw.githubusercontent.com/ali-ar1/marznode/main/xray_config.json"
+DEFAULT_CERTIFICATE="-----BEGIN CERTIFICATE-----
+MIIEnDCCAoQCAQAwDQYJKoZIhvcNAQENBQAwEzERMA8GA1UEAwwIR296YXJnYWgw
+IBcNMjQxMDE0MTExNTA5WhgPMjEyNDA5MjAxMTE1MDlaMBMxETAPBgNVBAMMCEdv
+emFyZ2FoMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAj6mbif/IaMJw
+i0UNzxcFzkYCe09HkdJp92U6xgaqE6fhUJOaRhPwLOnagJQopWR7yZlNaPa7/Nvc
+l7alVVVYdqPwlQLu06uIajdSQuwENxK6BSp60zHG7K2vL0365SRT/32g7FK6XS8z
+O96miDLWsMrIMRiGHlRAsJ7N8ReaKjaT6E9rKQPHhPGMAQOZPGE12iA0NbI9LZs2
+fXhSQgBs9T4b3XDQJArKPeFrdzT3kq2zkkvbpgwo/InEj7Jo/BxbG90wqFC5NKlb
+94pXu0rOUVIezdayAEejUAEyzA0gIP1+7/0XQMksJbLscI9sFl0SbjotrHg7Cyy6
+AKEnvQm2aMD4LQ6QHurKaW1BBF76N2nWuZOAB2gjXesjWeWT1c6zGgOvFg76MGJl
+lIF3qwrvuiOCAkQkNkLEF67suCbTD/1P01GgsA9jCaqzoID65UNMkAEPSAaNUcT3
+QhhIyOPKAlRSxNcTFj/PMAHves9fCmarrlcXpikhWXroR+NzCzphjswiK/twje0U
+BW+E/4H1DD3OXj8go5SZA3UG1H6aAq3RU+mRZq4bR8p0yluleIYAz1OoLHygq2s8
+bPtDuovZl6Rv2cfbsPD+8ucH0O6W8iA+eAb2r55u9++4pQK6VE1L+kGyon6H7FPm
+V1262ISvPg9BTdeNpSZlMeSfyJCToEsCAwEAATANBgkqhkiG9w0BAQ0FAAOCAgEA
+T1fSdCP8mt+mcFbdLDEs5Dyg/74WuL64ouB38saODH+xMBW4/SdTj+S65sOj8poY
+ef3sldMEc2xgv+sjXb5fSTdRqcTFTisS5CQaI+aKSPfXXV+JgmHM4t7991FDhARk
+lV9RxCOq+tLi96MtcKLdHOxU/Uf5f+B+BXG3U4ILItjBetXQGrUn83ZtMMeyYjB8
+b7vL9RuGr3Lrx6OldYTMSXFZ89eGhqjOFtEEAYU9xpF6XClyTU8xZ4eosRl7L3zM
+6GY2uP+3yeXz8tXfc8Noz/FAxD01SKkDOTyOUww+t8VxPKNdXCwKSrNd+EOTqUfH
+4iWN7W5z/CQk5KfhGpWYgHFI5TVRRF2+i2j2AE9voYt43BzZDI92gNqp2xsAUUa+
+SLoxPfQL9OL6vtssk54wkGIDC6q/GHOWNQ0ZRAqO20NgaFgODh961bUxV8lDymGI
+0vnfxCRpmo4OICxxdj950LXRQE9eBTqdKr3AUr2Ye8vp/9kSn5gqen0E73CrXJi/
++BhecoOU+9/wO4lUmGmFlSD+b5IttfxcFhZXaSyvdtJrgcPy3bA+MI7iQiZ9u8nQ
+uwIBNqosV1N+hvnSCfOHyZCKQkuVuSVEmpCyZyMBoj8e0VGQPEpanQLPh9iQRVsk
+1561fl0TUmIzU1op1KbrW7r8bY9P2CQ4vehroL2/hHs=
+-----END CERTIFICATE-----"
 
 log() { echo -e "${COLORS[BLUE]}[INFO]${COLORS[RESET]} $*"; }
 warn() { echo -e "${COLORS[YELLOW]}[WARN]${COLORS[RESET]} $*" >&2; }
@@ -91,16 +100,24 @@ create_directories() {
 }
 
 get_certificate() {
-    log "Please paste the Marznode certificate from the Marzneshin panel (press Enter on an empty line to finish):"
-    > "${INSTALL_DIR}/client.pem"
-    while IFS= read -r line; do
-        if [[ -z "$line" ]]; then
-            break
-        fi
-        echo "$line" >> "${INSTALL_DIR}/client.pem"
-    done
-    echo
-    success "Certificate saved to ${INSTALL_DIR}/client.pem"
+    log "Do you want to use the default Marznode certificate? (y/N or press Enter for default):"
+    read -r use_default
+    if [[ $use_default =~ ^[Yy]$ ]] || [[ -z $use_default ]]; then
+        log "Using default certificate..."
+        echo "$DEFAULT_CERTIFICATE" > "${INSTALL_DIR}/client.pem"
+        success "Default certificate saved to ${INSTALL_DIR}/client.pem"
+    else
+        log "Please paste the Marznode certificate from the Marzneshin panel (press Enter on an empty line to finish):"
+        > "${INSTALL_DIR}/client.pem"
+        while IFS= read -r line; do
+            if [[ -z "$line" ]]; then
+                break
+            fi
+            echo "$line" >> "${INSTALL_DIR}/client.pem"
+        done
+        echo
+        success "Certificate saved to ${INSTALL_DIR}/client.pem"
+    fi
 }
 
 show_xray_versions() {
@@ -247,8 +264,14 @@ install_marznode() {
     cp "${INSTALL_DIR}/repo/xray_config.json" "${INSTALL_DIR}/xray_config.json"
     
     local replace_config
-    read -p "Do you want to replace xray_config.json with a custom link? (y/N): " replace_config
-    if [[ $replace_config =~ ^[Yy]$ ]]; then
+    read -p "Do you want to use the default xray_config.json? (y/N or press Enter for default): " replace_config
+    if [[ $replace_config =~ ^[Yy]$ ]] || [[ -z $replace_config ]]; then
+        log "Downloading default xray_config.json from $DEFAULT_XRAY_CONFIG_URL..."
+        rm -f "${INSTALL_DIR}/xray_config.json"
+        wget -q --show-progress "$DEFAULT_XRAY_CONFIG_URL" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download default xray_config.json from $DEFAULT_XRAY_CONFIG_URL"
+        jq . "${INSTALL_DIR}/xray_config.json" > /dev/null 2>&1 || error "Downloaded xray_config.json is not a valid JSON file"
+        success "Default xray_config.json downloaded successfully"
+    else
         local config_url
         read -p "Enter the URL for the new xray_config.json: " config_url
         if [[ -n "$config_url" ]]; then
@@ -260,8 +283,6 @@ install_marznode() {
         else
             error "No URL provided. Aborting config replacement."
         fi
-    else
-        log "Using default xray_config.json from repository"
     fi
 
     while true; do
@@ -305,8 +326,14 @@ update_marznode() {
     docker compose -f "$COMPOSE_FILE" pull || error "Failed to pull latest Docker image."
 
     local replace_config
-    read -p "Do you want to replace xray_config.json with a custom link? (y/N): " replace_config
-    if [[ $replace_config =~ ^[Yy]$ ]]; then
+    read -p "Do you want to use the default xray_config.json? (y/N or press Enter for default): " replace_config
+    if [[ $replace_config =~ ^[Yy]$ ]] || [[ -z $replace_config ]]; then
+        log "Downloading default xray_config.json from $DEFAULT_XRAY_CONFIG_URL..."
+        rm -f "${INSTALL_DIR}/xray_config.json"
+        wget -q --show-progress "$DEFAULT_XRAY_CONFIG_URL" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download default xray_config.json from $DEFAULT_XRAY_CONFIG_URL"
+        jq . "${INSTALL_DIR}/xray_config.json" > /dev/null 2>&1 || error "Downloaded xray_config.json is not a valid JSON file"
+        success "Default xray_config.json downloaded successfully"
+    else
         local config_url
         read -p "Enter the URL for the new xray_config.json: " config_url
         if [[ -n "$config_url" ]]; then
@@ -318,8 +345,6 @@ update_marznode() {
         else
             error "No URL provided. Aborting config replacement."
         fi
-    else
-        log "Keeping existing xray_config.json"
     fi
 
     log "Selecting new Xray version..."
