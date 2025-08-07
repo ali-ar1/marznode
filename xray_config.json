@@ -72,104 +72,16 @@
                     "Sanjesh.org"
                 ],
                 "type": "field"
+            },
+            {
+                "type": "field",
+                "network": "udp",
+                "port": "443",
+                "outboundTag": "block"
             }
         ]
     },
     "inbounds": [
-        {
-            "tag": "vmess",
-            "listen": "0.0.0.0",
-            "port": 2088,
-            "protocol": "vmess",
-            "settings": {},
-            "streamSettings": {
-                "network": "tcp",
-                "tcpSettings": {
-                    "header": {
-                        "type": "http",
-                        "response": {
-                            "version": "1.1",
-                            "status": "200",
-                            "reason": "OK",
-                            "headers": {
-                                "Content-Type": [
-                                    "application/octet-stream",
-                                    "video/mpeg",
-                                    "application/x-msdownload",
-                                    "text/html",
-                                    "application/x-shockwave-flash"
-                                ],
-                                "Transfer-Encoding": [
-                                    "chunked"
-                                ],
-                                "Connection": [
-                                    "keep-alive"
-                                ],
-                                "Pragma": "no-cache"
-                            }
-                        }
-                    }
-                },
-                "security": "none"
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        },
-        {
-            "tag": "VLESS+GRPC+NONE+2060",
-            "listen": "0.0.0.0",
-            "port": 2060,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "grpc",
-                "security": "none",
-                "grpcSettings": {
-                    "serviceName": "2112vless",
-                    "multiMode": false
-                }
-            },
-            "sniffing": {
-                "enabled": false
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        },
         {
             "tag": "VLESS+XHTTP+NONE+2065",
             "listen": "0.0.0.0",
@@ -183,7 +95,7 @@
                 "network": "xhttp",
                 "security": "none",
                 "xhttpSettings": {
-                    "path": "/GaMeOpTiMiZeRed=2048",
+                    "path": "/",
                     "host": "",
                     "headers": {},
                     "noSSEHeader": false,
@@ -192,15 +104,9 @@
                 }
             },
             "sniffing": {
-                "enabled": false,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": false,
-                "routeOnly": false
+                "enabled": true,
+                "metadataOnly": true,
+                "routeOnly": true
             },
             "sockopt": {
                 "mark": 0,
@@ -224,7 +130,7 @@
         {
             "tag": "VLESS+XHTTP+REALITY",
             "listen": "0.0.0.0",
-            "port": 4045,
+            "port": 2081,
             "protocol": "vless",
             "settings": {
                 "clients": [],
@@ -242,15 +148,15 @@
                     "serverNames": [
                         "refersion.com"
                     ],
-                    "privateKey": "WGRSldNUSLdZHv-2uwtdn5ubtfYfckQZzE7VB1PBnXI",
+                    "privateKey": "OG8Ldne3H2YZoy3wm_wmIUE_u0sg92e2ziRmmCF4zXk",
                     "minClient": "",
                     "maxClient": "",
                     "maxTimediff": 0,
                     "shortIds": [
-                        "1e5f040eb8eb7303"
+                        "0a77eb535d"
                     ],
                     "settings": {
-                        "publicKey": "bhMaI5WighoHZiRkNsv3ccklOBdcn407sklDOdCnenw",
+                        "publicKey": "bYk3swidbqncfIDDsYQibVYMmOinnxS0vT3cf_VnLAM",
                         "fingerprint": "firefox",
                         "serverName": "",
                         "spiderX": "/www.python.org/downloads"
@@ -268,15 +174,63 @@
                 }
             },
             "sniffing": {
-                "enabled": false,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
+                "enabled": true,
+                "metadataOnly": true,
+                "routeOnly": true
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
+            }
+        },
+        {
+            "tag": "SHADOWSOCKS",
+            "listen": "0.0.0.0",
+            "port": 1339,
+            "protocol": "shadowsocks",
+            "settings": {
+                "method": "chacha20-ietf-poly1305",
+                "password": "X0qA4DT5m2dYuQk3dEXfhNqb8NVZe+mpdx9BazTbWCw=",
+                "network": "tcp,udp",
+                "clients": [],
+                "ivCheck": false
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "none",
+                "externalProxy": [
+                    {
+                        "forceTls": "same",
+                        "dest": "",
+                        "port": 1339,
+                        "remark": ""
+                    }
                 ],
-                "metadataOnly": false,
-                "routeOnly": false
+                "tcpSettings": {
+                    "acceptProxyProtocol": false,
+                    "header": {
+                        "type": "none"
+                    }
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "metadataOnly": true,
+                "routeOnly": true
             },
             "sockopt": {
                 "mark": 0,
@@ -317,7 +271,9 @@
                 }
             },
             "sniffing": {
-                "enabled": false
+                "enabled": true,
+                "metadataOnly": true,
+                "routeOnly": true
             },
             "sockopt": {
                 "mark": 0,
@@ -339,9 +295,9 @@
             }
         },
         {
-            "tag": "VLESS+HTTPUPGRADE+NONE+2095",
+            "tag": "VLESS+HTTPUPGRADE+NONE+80",
             "listen": "0.0.0.0",
-            "port": 2095,
+            "port": 80,
             "protocol": "vless",
             "settings": {
                 "clients": [],
@@ -352,47 +308,15 @@
                 "security": "none",
                 "httpupgradeSettings": {
                     "acceptProxyProtocol": false,
-                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegrWww.fast.com.live.sKornorth.com.Zula.ir",
+                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
                     "host": "",
                     "headers": {}
                 }
             },
             "sniffing": {
-                "enabled": false
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        },
-        {
-            "tag": "SHADOWSOCKS+7575",
-            "listen": "0.0.0.0",
-            "port": 7575,
-            "protocol": "shadowsocks",
-            "settings": {
-                "method": "chacha20-ietf-poly1305",
-                "password": "3F4W6f27iIIUaD91u3jGI16uL4sudZ1uykuhzFOmlAc=",
-                "network": "tcp,udp",
-                "clients": [],
-                "ivCheck": true
-            },
-            "sniffing": {
-                "enabled": false
+                "enabled": true,
+                "metadataOnly": true,
+                "routeOnly": true
             },
             "sockopt": {
                 "mark": 0,
