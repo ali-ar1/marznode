@@ -4,7 +4,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 SCRIPT_NAME="marznode"
-SCRIPT_VERSION="v0.1.2"
+SCRIPT_VERSION="v0.1.3"
 SCRIPT_URL="https://raw.githubusercontent.com/ali-ar1/marznode/main/install.sh"
 INSTALL_DIR="/var/lib/marznode"
 LOG_FILE="${INSTALL_DIR}/marznode.log"
@@ -24,7 +24,6 @@ declare -r -A COLORS=(
 
 DEPENDENCIES=(
     "docker"
-    "docker-compose-plugin"
     "curl"
     "wget"
     "unzip"
@@ -62,11 +61,7 @@ update_script() {
 check_dependencies() {
     local missing_deps=()
     for dep in "${DEPENDENCIES[@]}"; do
-        if [[ "$dep" == "docker-compose-plugin" ]]; then
-            docker compose version &>/dev/null || missing_deps+=("$dep")
-        else
-            command -v "$dep" &>/dev/null || missing_deps+=("$dep")
-        fi
+        command -v "$dep" &>/dev/null || missing_deps+=("$dep")
     done
 
     if [[ ${#missing_deps[@]} -gt 0 ]]; then
@@ -75,6 +70,14 @@ check_dependencies() {
     fi
 
     command -v docker &>/dev/null || { log "Installing Docker..."; curl -fsSL https://get.docker.com | sh; }
+    docker compose version &>/dev/null || {
+        log "Installing Docker Compose plugin..."
+        mkdir -p /root/.docker/cli-plugins
+        curl -SL "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /root/.docker/cli-plugins/docker-compose
+        chmod +x /root/.docker/cli-plugins/docker-compose
+        local compose_version=$(docker compose version --short)
+        success "Docker Compose plugin version ${compose_version} installed."
+    }
 }
 
 is_installed() { [[ -d "$INSTALL_DIR" && -f "$COMPOSE_FILE" ]]; }
@@ -89,7 +92,7 @@ create_directories() {
 
 get_certificate() {
     log "Please paste the Marznode certificate from the Marzneshin panel (press Enter on an empty line to finish):"
-    > "${INSTALL_DIR}/client.pem"  # Clear the file first
+    > "${INSTALL_DIR}/client.pem"
     while IFS= read -r line; do
         if [[ -z "$line" ]]; then
             break
@@ -203,7 +206,6 @@ EOF
 }
 
 install_marznode() {
-    # Check and remove marznode directory in current working directory if it exists
     if [ -d "./marznode" ]; then
         warn "Found 'marznode' directory in current working directory. Removing it..."
         rm -rf ./marznode || error "Failed to remove ./marznode directory"
@@ -244,7 +246,6 @@ install_marznode() {
     git clone "$GITHUB_REPO" "${INSTALL_DIR}/repo"
     cp "${INSTALL_DIR}/repo/xray_config.json" "${INSTALL_DIR}/xray_config.json"
     
-    # Ask if user wants to replace xray_config.json with a custom link
     local replace_config
     read -p "Do you want to replace xray_config.json with a custom link? (y/N): " replace_config
     if [[ $replace_config =~ ^[Yy]$ ]]; then
@@ -300,11 +301,9 @@ update_marznode() {
 
     log "Updating MarzNode..."
 
-    # Pull the latest Docker image
     log "Pulling latest MarzNode Docker image..."
     docker compose -f "$COMPOSE_FILE" pull || error "Failed to pull latest Docker image."
 
-    # Ask if user wants to replace xray_config.json with a custom link
     local replace_config
     read -p "Do you want to replace xray_config.json with a custom link? (y/N): " replace_config
     if [[ $replace_config =~ ^[Yy]$ ]]; then
@@ -323,7 +322,6 @@ update_marznode() {
         log "Keeping existing xray_config.json"
     fi
 
-    # Select and download new Xray version
     log "Selecting new Xray version..."
     while true; do
         if select_xray_version; then
@@ -331,7 +329,6 @@ update_marznode() {
         fi
     done
 
-    # Restart the service
     log "Restarting MarzNode service..."
     docker compose -f "$COMPOSE_FILE" down
     docker compose -f "$COMPOSE_FILE" up -d || error "Failed to restart MarzNode service."
