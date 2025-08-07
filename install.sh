@@ -24,6 +24,7 @@ declare -r -A COLORS=(
 
 DEPENDENCIES=(
     "docker"
+    "docker-compose"
     "curl"
     "wget"
     "unzip"
@@ -70,10 +71,9 @@ check_dependencies() {
     fi
 
     command -v docker &>/dev/null || { log "Installing Docker..."; curl -fsSL https://get.docker.com | sh; }
-    docker compose version &>/dev/null || {
+    command -v docker-compose &>/dev/null || {
         log "Installing Docker Compose..."
-        LATEST_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)
-        curl -L "https://github.com/docker/compose/releases/download/${LATEST_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
     }
 }
@@ -272,7 +272,7 @@ install_marznode() {
         
     setup_docker_compose "$port"
     
-    docker compose -f "$COMPOSE_FILE" up -d
+    docker-compose -f "$COMPOSE_FILE" up -d
     
     if command -v ufw &> /dev/null; then
         ufw allow "$port"
@@ -287,7 +287,7 @@ install_marznode() {
 uninstall_marznode() {
     log "Uninstalling MarzNode..."
     if [[ -f "$COMPOSE_FILE" ]]; then
-        docker compose -f "$COMPOSE_FILE" down --remove-orphans
+        docker-compose -f "$COMPOSE_FILE" down --remove-orphans
     fi
     rm -rf "$INSTALL_DIR"
     success "MarzNode uninstalled successfully"
@@ -303,7 +303,7 @@ update_marznode() {
 
     # Pull the latest Docker image
     log "Pulling latest MarzNode Docker image..."
-    docker compose -f "$COMPOSE_FILE" pull || error "Failed to pull latest Docker image."
+    docker-compose -f "$COMPOSE_FILE" pull || error "Failed to pull latest Docker image."
 
     # Ask if user wants to replace xray_config.json with a custom link
     local replace_config
@@ -334,8 +334,8 @@ update_marznode() {
 
     # Restart the service
     log "Restarting MarzNode service..."
-    docker compose -f "$COMPOSE_FILE" down
-    docker compose -f "$COMPOSE_FILE" up -d || error "Failed to restart MarzNode service."
+    docker-compose -f "$COMPOSE_FILE" down
+    docker-compose -f "$COMPOSE_FILE" up -d || error "Failed to restart MarzNode service."
 
     success "MarzNode updated successfully!"
 }
@@ -353,7 +353,7 @@ manage_service() {
                 warn "MarzNode is already running."
             else
                 log "Starting MarzNode..."
-                docker compose -f "$COMPOSE_FILE" up -d
+                docker-compose -f "$COMPOSE_FILE" up -d
                 success "MarzNode started"
             fi
             ;;
@@ -362,14 +362,14 @@ manage_service() {
                 warn "MarzNode is not running."
             else
                 log "Stopping MarzNode..."
-                docker compose -f "$COMPOSE_FILE" down
+                docker-compose -f "$COMPOSE_FILE" down
                 success "MarzNode stopped"
             fi
             ;;
         restart)
             log "Restarting MarzNode..."
-            docker compose -f "$COMPOSE_FILE" down
-            docker compose -f "$COMPOSE_FILE" up -d
+            docker-compose -f "$COMPOSE_FILE" down
+            docker-compose -f "$COMPOSE_FILE" up -d
             success "MarzNode restarted"
             ;;
     esac
@@ -390,7 +390,7 @@ show_status() {
 
 show_logs() {
     log "Showing MarzNode logs (press Ctrl+C to exit):"
-    docker compose -f "$COMPOSE_FILE" logs --tail=100 -f
+    docker-compose -f "$COMPOSE_FILE" logs --tail=100 -f
 }
 
 install_script() {
