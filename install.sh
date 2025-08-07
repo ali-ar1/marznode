@@ -3,6 +3,23 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# Ensure COLORS array is properly defined
+declare -r -A COLORS=(
+    [RED]='\033[0;31m'
+    [GREEN]='\033[0;32m'
+    [YELLOW]='\033[0;33m'
+    [BLUE]='\033[0;34m'
+    [PURPLE]='\033[0;35m'
+    [CYAN]='\033[0;36m'
+    [RESET]='\033[0m'
+)
+
+# Check if COLORS array is defined correctly
+if [[ -z "${COLORS[BLUE]}" ]]; then
+    echo "Error: COLORS array is not properly defined"
+    exit 1
+fi
+
 SCRIPT_NAME="marznode"
 SCRIPT_VERSION="v0.1.4"
 SCRIPT_URL="https://raw.githubusercontent.com/ali-ar1/marznode/main/install.sh"
@@ -39,6 +56,15 @@ SLoxPfQL9OL6vtssk54wkGIDC6q/GHOWNQ0ZRAqO20NgaFgODh961bUxV8lDymGI
 uwIBNqosV1N+hvnSCfOHyZCKQkuVuSVEmpCyZyMBoj8e0VGQPEpanQLPh9iQRVsk
 1561fl0TUmIzU1op1KbrW7r8bY9P2CQ4vehroL2/hHs=
 -----END CERTIFICATE-----"
+
+DEPENDENCIES=(
+    "docker"
+    "curl"
+    "wget"
+    "unzip"
+    "git"
+    "jq"
+)
 
 log() { echo -e "${COLORS[BLUE]}[INFO]${COLORS[RESET]} $*"; }
 warn() { echo -e "${COLORS[YELLOW]}[WARN]${COLORS[RESET]} $*" >&2; }
