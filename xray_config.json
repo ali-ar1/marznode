@@ -1,354 +1,336 @@
 {
-    "log": {
-        "loglevel": "warning"
-    },
-    "dns": {
-        "servers": [
-            "8.8.8.8",
-            "8.8.4.4",
-            "1.1.1.1",
-            "1.0.0.1"
-        ],
-        "queryStrategy": "ForceIPv4"
-    },
-    "policy": {
-        "levels": {
-            "0": {
-                "handshake": 2,
-                "connIdle": 120,
-                "uplinkOnly": 4,
-                "downlinkOnly": 5,
-                "bufferSize": 16,
-                "statsUserUplink": true,
-                "statsUserDownlink": true,
-                "statsUserOnline": true
-            }
-        },
-        "system": {
-            "statsInboundUplink": true,
-            "statsInboundDownlink": true,
-            "statsOutboundUplink": true,
-            "statsOutboundDownlink": true
-        }
-    },
-    "routing": {
-        "domainStrategy": "IPIfNonMatch",
-        "rules": [
-            {
-                "type": "field",
-                "outboundTag": "blackhole",
-                "ip": [
-                    "geoip:private",
-                    "geoip:ir"
-                ]
-            },
-            {
-                "type": "field",
-                "port": 53,
-                "network": "tcp,udp",
-                "outboundTag": "DNS-Internal"
-            },
-            {
-                "type": "field",
-                "outboundTag": "blackhole",
-                "protocol": [
-                    "bittorrent"
-                ]
-            },
-            {
-                "outboundTag": "blackhole",
-                "domain": [
-                    "regexp:.*\\.ir$",
-                    "ext:iran.dat:ir",
-                    "ext:iran.dat:other",
-                    "geosite:category-ir",
-                    "blogfa",
-                    "bank",
-                    "tebyan.net",
-                    "beytoote.com",
-                    "Film2movie.ws",
-                    "Setare.com",
-                    "downloadha.com",
-                    "Sanjesh.org"
-                ],
-                "type": "field"
-            },
-            {
-                "type": "field",
-                "network": "udp",
-                "port": "443",
-                "outboundTag": "block"
-            }
-        ]
-    },
-    "inbounds": [
-        {
-            "tag": "VLESS+XHTTP+NONE+2065",
-            "listen": "0.0.0.0",
-            "port": 2065,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "xhttp",
-                "security": "none",
-                "xhttpSettings": {
-                    "path": "/",
-                    "host": "",
-                    "headers": {},
-                    "noSSEHeader": false,
-                    "xPaddingBytes": "100-1000",
-                    "mode": "auto"
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        },
-        {
-            "tag": "VLESS+XHTTP+REALITY",
-            "listen": "0.0.0.0",
-            "port": 2081,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none",
-                "fallbacks": []
-            },
-            "streamSettings": {
-                "network": "xhttp",
-                "security": "reality",
-                "externalProxy": [],
-                "realitySettings": {
-                    "show": false,
-                    "xver": 0,
-                    "dest": "google.com:443",
-                    "serverNames": [
-                        "refersion.com"
-                    ],
-                    "privateKey": "OG8Ldne3H2YZoy3wm_wmIUE_u0sg92e2ziRmmCF4zXk",
-                    "minClient": "",
-                    "maxClient": "",
-                    "maxTimediff": 0,
-                    "shortIds": [
-                        "0a77eb535d"
-                    ],
-                    "settings": {
-                        "publicKey": "bYk3swidbqncfIDDsYQibVYMmOinnxS0vT3cf_VnLAM",
-                        "fingerprint": "firefox",
-                        "serverName": "",
-                        "spiderX": "/www.python.org/downloads"
-                    }
-                },
-                "xhttpSettings": {
-                    "path": "/Www.fast.com.live.sKornorth.com.Zula.ir?ed=2048",
-                    "host": "",
-                    "headers": {},
-                    "scMaxBufferedPosts": 30,
-                    "scMaxEachPostBytes": "1000000",
-                    "noSSEHeader": false,
-                    "xPaddingBytes": "100-1000",
-                    "mode": "auto"
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        },
-        {
-            "tag": "SHADOWSOCKS",
-            "listen": "0.0.0.0",
-            "port": 1339,
-            "protocol": "shadowsocks",
-            "settings": {
-                "method": "chacha20-ietf-poly1305",
-                "password": "X0qA4DT5m2dYuQk3dEXfhNqb8NVZe+mpdx9BazTbWCw=",
-                "network": "tcp,udp",
-                "clients": [],
-                "ivCheck": false
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "none",
-                "externalProxy": [
-                    {
-                        "forceTls": "same",
-                        "dest": "",
-                        "port": 1339,
-                        "remark": ""
-                    }
-                ],
-                "tcpSettings": {
-                    "acceptProxyProtocol": false,
-                    "header": {
-                        "type": "none"
-                    }
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        },
-        {
-            "tag": "VLESS+HTTPUPGRADE+NONE+8080",
-            "listen": "0.0.0.0",
-            "port": 8080,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "httpupgrade",
-                "security": "none",
-                "httpupgradeSettings": {
-                    "acceptProxyProtocol": false,
-                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegrWww.fast.com.live.sKornorth.com.Zula.ir",
-                    "host": "",
-                    "headers": {}
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        },
-        {
-            "tag": "VLESS+HTTPUPGRADE+NONE+80",
-            "listen": "0.0.0.0",
-            "port": 80,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "httpupgrade",
-                "security": "none",
-                "httpupgradeSettings": {
-                    "acceptProxyProtocol": false,
-                    "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
-                    "host": "",
-                    "headers": {}
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "metadataOnly": true,
-                "routeOnly": true
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        }
+  "log": {
+    "loglevel": "warning"
+  },
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1"
     ],
-    "outbounds": [
-        {
-            "protocol": "freedom",
-            "tag": "DIRECT",
-            "settings": {
-                "domainStrategy": "ForceIPv4"
-            }
-        },
-        {
-            "protocol": "blackhole",
-            "tag": "blackhole"
-        }
+    "queryStrategy": "ForceIPv4"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 2,
+        "connIdle": 120,
+        "uplinkOnly": 4,
+        "downlinkOnly": 5,
+        "bufferSize": 16,
+        "statsUserUplink": true,
+        "statsUserDownlink": true,
+        "statsUserOnline": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundUplink": true,
+      "statsOutboundDownlink": true
+    }
+  },
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "blackhole",
+        "ip": [
+          "geoip:private",
+          "geoip:ir"
+        ]
+      },
+      {
+        "type": "field",
+        "port": 53,
+        "network": "tcp,udp",
+        "outboundTag": "DNS-Internal"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blackhole",
+        "protocol": [
+          "bittorrent"
+        ]
+      },
+      {
+        "outboundTag": "blackhole",
+        "domain": [
+          "regexp:.*\\.ir$",
+          "ext:iran.dat:ir",
+          "ext:iran.dat:other",
+          "geosite:category-ir",
+          "blogfa",
+          "bank",
+          "tebyan.net",
+          "beytoote.com",
+          "Film2movie.ws",
+          "Setare.com",
+          "downloadha.com",
+          "Sanjesh.org"
+        ],
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "network": "udp",
+        "port": "443",
+        "outboundTag": "block"
+      }
     ]
+  },
+  "inbounds": [
+    {
+      "tag": "VLESS+XHTTP+NONE+2065",
+      "listen": "0.0.0.0",
+      "port": 2065,
+      "protocol": "vless",
+      "settings": {
+        "clients": [],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "security": "none",
+        "xhttpSettings": {
+          "path": "/",
+          "host": "",
+          "headers": {},
+          "noSSEHeader": false,
+          "xPaddingBytes": "100-1000",
+          "mode": "auto"
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "metadataOnly": true,
+        "routeOnly": true
+      },
+      "sockopt": {
+        "mark": 0,
+        "tcpMaxSeg": 1420,
+        "tcpFastOpen": true,
+        "tproxy": "off",
+        "domainStrategy": "AsIs",
+        "dialerProxy": "",
+        "acceptProxyProtocol": false,
+        "tcpKeepAliveInterval": 0,
+        "tcpKeepAliveIdle": 100,
+        "tcpUserTimeout": 5000,
+        "tcpCongestion": "cubic",
+        "interface": "",
+        "v6only": false,
+        "tcpWindowClamp": 8000,
+        "tcpMptcp": false,
+        "tcpNoDelay": false
+      }
+    },
+    {
+      "tag": "VLESS+XHTTP+REALITY",
+      "listen": "0.0.0.0",
+      "port": 2081,
+      "protocol": "vless",
+      "settings": {
+        "clients": [],
+        "decryption": "none",
+        "fallbacks": []
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "security": "reality",
+        "externalProxy": [],
+        "realitySettings": {
+          "show": false,
+          "xver": 0,
+          "dest": "google.com:443",
+          "serverNames": [
+            "germany.iran-moba.ir"
+          ],
+          "privateKey": "OG8Ldne3H2YZoy3wm_wmIUE_u0sg92e2ziRmmCF4zXk",
+          "minClient": "",
+          "maxClient": "",
+          "maxTimediff": 0,
+          "shortIds": [
+            "0a77eb535d"
+          ],
+          "settings": {
+            "publicKey": "bYk3swidbqncfIDDsYQibVYMmOinnxS0vT3cf_VnLAM",
+            "fingerprint": "firefox",
+            "serverName": "",
+            "spiderX": "/www.python.org/downloads"
+          }
+        },
+        "xhttpSettings": {
+          "path": "/Www.fast.com.live.sKornorth.com.Zula.ir?ed=2048",
+          "host": "",
+          "headers": {},
+          "scMaxBufferedPosts": 30,
+          "scMaxEachPostBytes": "1000000",
+          "noSSEHeader": false,
+          "xPaddingBytes": "100-1000",
+          "mode": "auto"
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "metadataOnly": true,
+        "routeOnly": true
+      },
+      "sockopt": {
+        "mark": 0,
+        "tcpMaxSeg": 1420,
+        "tcpFastOpen": true,
+        "tproxy": "off",
+        "domainStrategy": "AsIs",
+        "dialerProxy": "",
+        "acceptProxyProtocol": false,
+        "tcpKeepAliveInterval": 0,
+        "tcpKeepAliveIdle": 100,
+        "tcpUserTimeout": 5000,
+        "tcpCongestion": "cubic",
+        "interface": "",
+        "v6only": false,
+        "tcpWindowClamp": 8000,
+        "tcpMptcp": false,
+        "tcpNoDelay": false
+      }
+    },
+    {
+      "tag": "SHADOWSOCKS+7575",
+      "listen": "0.0.0.0",
+      "port": 7575,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "chacha20-ietf-poly1305",
+        "password": "3F4W6f27iIIUaD91u3jGI16uL4sudZ1uykuhzFOmlAc=",
+        "network": "tcp,udp",
+        "clients": [],
+        "ivCheck": true
+      },
+      "sniffing": {
+        "enabled": true,
+        "metadataOnly": true,
+        "routeOnly": true
+      },
+      "sockopt": {
+        "mark": 0,
+        "tcpMaxSeg": 1420,
+        "tcpFastOpen": true,
+        "tproxy": "off",
+        "domainStrategy": "AsIs",
+        "dialerProxy": "",
+        "acceptProxyProtocol": false,
+        "tcpKeepAliveInterval": 0,
+        "tcpKeepAliveIdle": 100,
+        "tcpUserTimeout": 5000,
+        "tcpCongestion": "cubic",
+        "interface": "",
+        "v6only": false,
+        "tcpWindowClamp": 8000,
+        "tcpMptcp": false,
+        "tcpNoDelay": false
+      }
+    },
+    {
+      "tag": "VLESS+HTTPUPGRADE+NONE+8080",
+      "listen": "0.0.0.0",
+      "port": 8080,
+      "protocol": "vless",
+      "settings": {
+        "clients": [],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "httpupgrade",
+        "security": "none",
+        "httpupgradeSettings": {
+          "acceptProxyProtocol": false,
+          "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegrWww.fast.com.live.sKornorth.com.Zula.ir",
+          "host": "",
+          "headers": {}
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "metadataOnly": true,
+        "routeOnly": true
+      },
+      "sockopt": {
+        "mark": 0,
+        "tcpMaxSeg": 1420,
+        "tcpFastOpen": true,
+        "tproxy": "off",
+        "domainStrategy": "AsIs",
+        "dialerProxy": "",
+        "acceptProxyProtocol": false,
+        "tcpKeepAliveInterval": 0,
+        "tcpKeepAliveIdle": 100,
+        "tcpUserTimeout": 5000,
+        "tcpCongestion": "cubic",
+        "interface": "",
+        "v6only": false,
+        "tcpWindowClamp": 8000,
+        "tcpMptcp": false,
+        "tcpNoDelay": false
+      }
+    },
+    {
+      "tag": "VLESS+HTTPUPGRADE+NONE+80",
+      "listen": "0.0.0.0",
+      "port": 80,
+      "protocol": "vless",
+      "settings": {
+        "clients": [],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "httpupgrade",
+        "security": "none",
+        "httpupgradeSettings": {
+          "acceptProxyProtocol": false,
+          "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegram--ar_storE_pn--telegram----aR_store_pN?ed=2048",
+          "host": "",
+          "headers": {}
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "metadataOnly": true,
+        "routeOnly": true
+      },
+      "sockopt": {
+        "mark": 0,
+        "tcpMaxSeg": 1420,
+        "tcpFastOpen": true,
+        "tproxy": "off",
+        "domainStrategy": "AsIs",
+        "dialerProxy": "",
+        "acceptProxyProtocol": false,
+        "tcpKeepAliveInterval": 0,
+        "tcpKeepAliveIdle": 100,
+        "tcpUserTimeout": 5000,
+        "tcpCongestion": "cubic",
+        "interface": "",
+        "v6only": false,
+        "tcpWindowClamp": 8000,
+        "tcpMptcp": false,
+        "tcpNoDelay": false
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "DIRECT",
+      "settings": {
+        "domainStrategy": "ForceIPv4"
+      }
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "blackhole"
+    }
+  ]
 }
