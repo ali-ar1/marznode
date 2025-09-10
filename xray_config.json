@@ -77,6 +77,61 @@
   },
   "inbounds": [
     {
+      "tag": "vmess",
+      "listen": "0.0.0.0",
+      "port": 2088,
+      "protocol": "vmess",
+      "settings": {},
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {
+          "header": {
+            "type": "http",
+            "response": {
+              "version": "1.1",
+              "status": "200",
+              "reason": "OK",
+              "headers": {
+                "Content-Type": [
+                  "application/octet-stream",
+                  "video/mpeg",
+                  "application/x-msdownload",
+                  "text/html",
+                  "application/x-shockwave-flash"
+                ],
+                "Transfer-Encoding": [
+                  "chunked"
+                ],
+                "Connection": [
+                  "keep-alive"
+                ],
+                "Pragma": "no-cache"
+              }
+            }
+          }
+        },
+        "security": "none"
+      },
+      "sockopt": {
+        "mark": 0,
+        "tcpMaxSeg": 1420,
+        "tcpFastOpen": true,
+        "tproxy": "off",
+        "domainStrategy": "AsIs",
+        "dialerProxy": "",
+        "acceptProxyProtocol": false,
+        "tcpKeepAliveInterval": 0,
+        "tcpKeepAliveIdle": 100,
+        "tcpUserTimeout": 5000,
+        "tcpCongestion": "cubic",
+        "interface": "",
+        "v6only": false,
+        "tcpWindowClamp": 8000,
+        "tcpMptcp": false,
+        "tcpNoDelay": false
+      }
+    },
+    {
       "tag": "VLESS+XHTTP+REALITY+8443",
       "listen": "0.0.0.0",
       "port": 8443,
@@ -132,61 +187,6 @@
         ],
         "metadataOnly": false,
         "routeOnly": false
-      },
-      "sockopt": {
-        "mark": 0,
-        "tcpMaxSeg": 1420,
-        "tcpFastOpen": true,
-        "tproxy": "off",
-        "domainStrategy": "AsIs",
-        "dialerProxy": "",
-        "acceptProxyProtocol": false,
-        "tcpKeepAliveInterval": 0,
-        "tcpKeepAliveIdle": 100,
-        "tcpUserTimeout": 5000,
-        "tcpCongestion": "cubic",
-        "interface": "",
-        "v6only": false,
-        "tcpWindowClamp": 8000,
-        "tcpMptcp": false,
-        "tcpNoDelay": false
-      }
-    },
-    {
-      "tag": "vmess",
-      "listen": "0.0.0.0",
-      "port": 2088,
-      "protocol": "vmess",
-      "settings": {},
-      "streamSettings": {
-        "network": "tcp",
-        "tcpSettings": {
-          "header": {
-            "type": "http",
-            "response": {
-              "version": "1.1",
-              "status": "200",
-              "reason": "OK",
-              "headers": {
-                "Content-Type": [
-                  "application/octet-stream",
-                  "video/mpeg",
-                  "application/x-msdownload",
-                  "text/html",
-                  "application/x-shockwave-flash"
-                ],
-                "Transfer-Encoding": [
-                  "chunked"
-                ],
-                "Connection": [
-                  "keep-alive"
-                ],
-                "Pragma": "no-cache"
-              }
-            }
-          }
-        },
-        "security": "none"
       },
       "sockopt": {
         "mark": 0,
@@ -275,9 +275,9 @@
         "realitySettings": {
           "show": false,
           "xver": 0,
-          "dest": "google.com:443",
+          "dest": "connectivitycheck.gstatic.com:443",
           "serverNames": [
-            "refersion.com"
+            "connectivitycheck.gstatic.com"
           ],
           "privateKey": "WGRSldNUSLdZHv-2uwtdn5ubtfYfckQZzE7VB1PBnXI",
           "minClient": "",
@@ -290,7 +290,7 @@
             "publicKey": "bhMaI5WighoHZiRkNsv3ccklOBdcn407sklDOdCnenw",
             "fingerprint": "firefox",
             "serverName": "",
-            "spiderX": "/www.python.org/downloads"
+            "spiderX": "/generate_204"
           }
         },
         "xhttpSettings": {
@@ -338,47 +338,6 @@
       "tag": "VLESS+HTTPUPGRADE+NONE+8080",
       "listen": "0.0.0.0",
       "port": 8080,
-      "protocol": "vless",
-      "settings": {
-        "clients": [],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "httpupgrade",
-        "security": "none",
-        "httpupgradeSettings": {
-          "acceptProxyProtocol": false,
-          "path": "/telegram---AR_store--telegram--ar_store--telegram--AR_store_n--telegrWww.fast.com.live.sKornorth.com.Zula.ir",
-          "host": "",
-          "headers": {}
-        }
-      },
-      "sniffing": {
-        "enabled": false
-      },
-      "sockopt": {
-        "mark": 0,
-        "tcpMaxSeg": 1420,
-        "tcpFastOpen": true,
-        "tproxy": "off",
-        "domainStrategy": "AsIs",
-        "dialerProxy": "",
-        "acceptProxyProtocol": false,
-        "tcpKeepAliveInterval": 0,
-        "tcpKeepAliveIdle": 100,
-        "tcpUserTimeout": 5000,
-        "tcpCongestion": "cubic",
-        "interface": "",
-        "v6only": false,
-        "tcpWindowClamp": 8000,
-        "tcpMptcp": false,
-        "tcpNoDelay": false
-      }
-    },
-    {
-      "tag": "VLESS+HTTPUPGRADE+NONE+2095",
-      "listen": "0.0.0.0",
-      "port": 2095,
       "protocol": "vless",
       "settings": {
         "clients": [],
