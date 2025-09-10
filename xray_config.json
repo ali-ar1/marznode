@@ -122,8 +122,8 @@
     ],
     "metadataOnly": true,
     "routeOnly": true
-                }
-        }
+  }
+}
     ],
     "outbounds": [
         {
