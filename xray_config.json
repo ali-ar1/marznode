@@ -123,24 +123,7 @@
     "metadataOnly": true,
     "routeOnly": true
             },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
+                }
         }
     ],
     "outbounds": [
