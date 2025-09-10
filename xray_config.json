@@ -125,6 +125,7 @@
     "routeOnly": true
   }
 }
+        }
     ],
     "outbounds": [
         {
