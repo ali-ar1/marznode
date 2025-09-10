@@ -76,55 +76,7 @@
         ]
     },
     "inbounds": [
-        {
-  "tag": "VLESS+XHTTP+REALITY+2053",
-  "listen": "0.0.0.0",
-  "port": 2053,
-  "protocol": "vless",
-  "settings": {
-    "clients": [],
-    "decryption": "none"
-  },
-  "streamSettings": {
-    "network": "xhttp",
-    "security": "reality",
-    "xhttpSettings": {
-      "path": "/Www.fast.com.live.sKornorth.com.Zula.ir?ed=2048",
-      "host": "",
-      "headers": {},
-      "noSSEHeader": false,
-      "xPaddingBytes": "100-1000",
-      "mode": "auto"
-    },
-    "realitySettings": {
-      "show": false,
-      "dest": "connectivitycheck.gstatic.com:443",
-      "xver": 0,
-      "serverNames": [
-        "connectivitycheck.gstatic.com"
-      ],
-      "privateKey": "EBNmuJI5MW0ZHByX2SNER_bzCjs3ec5AkaA_l2tbxnE",
-      "publicKey": "51Xw-AXk7vrl4G31lm4YO-YE0SwmNO2xHiz7nXC6gXU",
-      "shortIds": [
-        "f266b42f3a37dea6"
-      ],
-      "spiderX": "/generate_204",
-      "fingerprint": "firefox"
-    }
-  },
-  "sniffing": {
-    "enabled": true,
-    "destOverride": [
-      "http",
-      "tls",
-      "quic",
-      "fakedns"
-    ],
-    "metadataOnly": true,
-    "routeOnly": true
-  }
-},
-                {
+            {
   "tag": "VLESS+XHTTP+REALITY+8443",
   "listen": "0.0.0.0",
   "port": 8443,
@@ -139,7 +91,8 @@
     "xhttpSettings": {
       "path": "/Www.fast.com.live.sKornorth.com.Zula.ir?ed=2048",
       "host": "",
-      "headers": {},
+      "headers": {
+        "Headers": ""},
       "noSSEHeader": false,
       "xPaddingBytes": "100-1000",
       "mode": "auto"
