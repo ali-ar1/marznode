@@ -9,7 +9,7 @@
       "1.1.1.1",
       "1.0.0.1"
     ],
-    "queryStrategy": "ForceIPv4"
+    "queryStrategy": "ForceIPv4v6"
   },
   "policy": {
     "levels": {
@@ -434,7 +434,7 @@
       "protocol": "freedom",
       "tag": "DIRECT",
       "settings": {
-        "domainStrategy": "ForceIPv4"
+        "domainStrategy": "ForceIPv4v6"
       }
     },
     {
@@ -444,6 +444,10 @@
     {
       "protocol": "blackhole",
       "tag": "blackhole"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block"
     }
   ]
 }
