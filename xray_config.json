@@ -1,92 +1,99 @@
 {
-    "log": {
-        "loglevel": "warning"
+  "log": {
+    "loglevel": "warning"
+  },
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1"
+    ],
+    "queryStrategy": "ForceIPv4"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 2,
+        "connIdle": 120,
+        "uplinkOnly": 4,
+        "downlinkOnly": 5,
+        "bufferSize": 16,
+        "statsUserUplink": true,
+        "statsUserDownlink": true,
+        "statsUserOnline": true
+      }
     },
-    "dns": {
-        "servers": [
-            "8.8.8.8",
-            "8.8.4.4",
-            "1.1.1.1",
-            "1.0.0.1"
-        ],
-        "queryStrategy": "ForceIPv4"
-    },
-    "policy": {
-        "levels": {
-            "0": {
-                "handshake": 2,
-                "connIdle": 120,
-                "uplinkOnly": 4,
-                "downlinkOnly": 5,
-                "bufferSize": 16,
-                "statsUserUplink": true,
-                "statsUserDownlink": true,
-                "statsUserOnline": true
-            }
-        },
-        "system": {
-            "statsInboundUplink": true,
-            "statsInboundDownlink": true,
-            "statsOutboundUplink": true,
-            "statsOutboundDownlink": true
-        }
-    },
-    "routing": {
-        "domainStrategy": "IPIfNonMatch",
-        "rules": [
-            {
-                "type": "field",
-                "outboundTag": "blackhole",
-                "ip": [
-                    "geoip:private",
-                    "geoip:ir"
-                ]
-            },
-            {
-                "type": "field",
-                "port": "53,853",
-                "network": "tcp,udp",
-                "outboundTag": "DNS-Internal"
-            },
-            {
-                "type": "field",
-                "outboundTag": "blackhole",
-                "protocol": [
-                    "bittorrent"
-                ]
-            },
-            {
-                "outboundTag": "blackhole",
-                "domain": [
-                    "regexp:.*\\.ir$",
-                    "ext:iran.dat:ir",
-                    "ext:iran.dat:other",
-                    "geosite:category-ir",
-                    "blogfa",
-                    "bank",
-                    "tebyan.net",
-                    "beytoote.com",
-                    "Film2movie.ws",
-                    "Setare.com",
-                    "downloadha.com",
-                    "Sanjesh.org"
-                ],
-                "type": "field"
-            },
-            {
-                "type": "field",
-                "network": "udp",
-                "port": "443",
-                "outboundTag": "block"
-            },
-            {
-                "type": "field",
-                "network": "udp",
-                "port": "853",
-                "outboundTag": "block"
-            }
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundUplink": true,
+      "statsOutboundDownlink": true
+    }
+  },
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "blackhole",
+        "ip": [
+          "geoip:private",
+          "geoip:ir"
         ]
-    },
+      },
+      {
+        "type": "field",
+        "port": "53,853",
+        "network": "tcp,udp",
+        "outboundTag": "DNS-Internal"
+      },
+      {
+        "type": "field",
+        "outboundTag": "blackhole",
+        "protocol": [
+          "bittorrent"
+        ]
+      },
+      {
+        "outboundTag": "blackhole",
+        "domain": [
+          "regexp:.*\\.ir$",
+          "ext:iran.dat:ir",
+          "ext:iran.dat:other",
+          "geosite:category-ir",
+          "blogfa",
+          "bank",
+          "tebyan.net",
+          "beytoote.com",
+          "Film2movie.ws",
+          "Setare.com",
+          "downloadha.com",
+          "Sanjesh.org"
+        ],
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "ip": [
+          "geoip:private"
+        ],
+        "outboundTag": "block"
+      },
+      {
+        "type": "field",
+        "network": "udp",
+        "port": "443",
+        "outboundTag": "block"
+      },
+      {
+        "type": "field",
+        "network": "udp",
+        "port": "853",
+        "outboundTag": "block"
+      }
+    ]
+  },
   "inbounds": [
     {
       "tag": "vmess",
