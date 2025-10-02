@@ -4,6 +4,7 @@
   },
   "dns": {
     "servers": [
+      "https+local://dns.dynx.pro/dns-query",
       "8.8.8.8",
       "8.8.4.4",
       "1.1.1.1",
