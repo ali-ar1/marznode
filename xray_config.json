@@ -4,11 +4,20 @@
     },
     "dns": {
         "servers": [
-            "https://dns.dynx.pro/dns-query",
             "8.8.8.8",
             "8.8.4.4",
             "1.1.1.1",
-            "1.0.0.1"
+            "1.0.0.1",
+            {
+                "domains": [
+                    "youtubeadservice.com",
+                    "adservice.google.com",
+                    "googlesyndication.com",
+                    "doubleclick.net"
+                ],
+                "address": "https://dns.dynx.pro/dns-query",
+                "queryStrategy": "ForceIPv4v6"
+            }
         ],
         "queryStrategy": "ForceIPv4v6",
         "disableCache": false,
