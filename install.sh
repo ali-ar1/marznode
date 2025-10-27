@@ -405,7 +405,6 @@ update_marznode() {
     docker compose -f "$COMPOSE_FILE" up -d || error "Failed to restart MarzNode service."
 
     success "MarzNode updated successfully!"
-}
 
 manage_service() {
     if ! is_installed; then
