@@ -349,7 +349,6 @@ install_marznode() {
     fi
 
     success "MarzNode installed successfully!"
-}
 
 uninstall_marznode() {
     log "Uninstalling MarzNode..."
