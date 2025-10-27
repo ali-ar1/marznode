@@ -165,62 +165,64 @@
         "tcpNoDelay": false
       }
     },
-    {
-      "tag": "VLESS+XHTTP+REALITY+8443",
-      "listen": "0.0.0.0",
-      "port": 8443,
-      "protocol": "vless",
-      "settings": {
-        "clients": [],
-        "decryption": "none",
-        "fallbacks": []
-      },
-      "streamSettings": {
-        "network": "xhttp",
-        "security": "reality",
-        "externalProxy": [],
-        "realitySettings": {
-          "show": false,
-          "xver": 0,
-          "dest": "connectivitycheck.gstatic.com:443",
-          "serverNames": [
-            "connectivitycheck.gstatic.com"
-          ],
-          "privateKey": "EBNmuJI5MW0ZHByX2SNER_bzCjs3ec5AkaA_l2tbxnE",
-          "minClient": "",
-          "maxClient": "",
-          "maxTimediff": 0,
-          "shortIds": [
-            "1e5f040eb8eb7303"
-          ],
-          "settings": {
-            "publicKey": "51Xw-AXk7vrl4G31lm4YO-YE0SwmNO2xHiz7nXC6gXU",
-            "fingerprint": "firefox",
-            "serverName": "",
-            "spiderX": "/generate_204"
-          }
-        },
-        "xhttpSettings": {
-          "path": "/Www.fast.com.live.sKornorth.com.Zula.ir?ed=2048",
-          "host": "",
-          "headers": {},
-          "scMaxBufferedPosts": 30,
-          "scMaxEachPostBytes": "1000000",
-          "noSSEHeader": false,
-          "xPaddingBytes": "100-1000",
-          "mode": "auto"
-        }
-      },
-      "sniffing": {
-        "enabled": false,
-        "destOverride": [
-          "http",
-          "tls",
-          "quic",
-          "fakedns"
-        ],
-        "metadataOnly": false,
-        "routeOnly": false
+            {
+            "tag": "VLESS+XHTTP+TLS",
+            "listen": "0.0.0.0",
+            "port": 8443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "xhttp",
+                "security": "tls",
+                "xhttpSettings": {
+                    "path": "/HeyThere?ed=2048",
+                    "host": "",
+                    "headers": {},
+                    "noSSEHeader": false,
+                    "xPaddingBytes": "100-1000",
+                    "mode": "auto"
+                },
+                "tlsSettings": {
+                    "serverName": "",
+                    "minVersion": "1.0",
+                    "maxVersion": "1.3",
+                    "cipherSuites": "RSA_AES_128_CBC:RSA_AES_256_CBC:RSA_AES_128_GCM:RSA_AES_256_GCM:AES_128_GCM:AES_256_GCM:CHACHA20_POLY1305:ECDHE_ECDSA_AES_128_CBC:ECDHE_ECDSA_AES_256_CBC:ECDHE_RSA_AES_128_CBC:ECDHE_RSA_AES_256_CBC:ECDHE_ECDSA_AES_128_GCM:ECDHE_ECDSA_AES_256_GCM:ECDHE_RSA_AES_128_GCM:ECDHE_RSA_AES_256_GCM:ECDHE_ECDSA_CHACHA20_POLY1305:ECDHE_RSA_CHACHA20_POLY1305",
+                    "rejectUnknownSni": false,
+                    "disableSystemRoot": false,
+                    "enableSessionResumption": false,
+                    "alpn": [
+                        "h3",
+                        "h2",
+                        "http/1.1"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/var/lib/marznode/certs/ar-panelar.com/fullchain.pem",
+                            "keyFile": "/var/lib/marznode/certs/ar-panelar.com/privkey.pem",
+                            "ocspStapling": 3600,
+                            "usage": "encipherment",
+                            "buildChain": false
+                        }
+                    ],
+                    "settings": {
+                        "allowInsecure": false,
+                        "fingerprint": "chrome"
+                    }
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "fakedns"
+                ],
+                "metadataOnly": true,
+                "routeOnly": true
       },
       "sockopt": {
         "mark": 0,
