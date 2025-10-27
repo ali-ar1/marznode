@@ -322,7 +322,11 @@ install_marznode() {
     else
         local config_url
         read -p "Enter the URL for a custom xray_config.json: " config_url
-        [[ -z "$config_url" ]] && error "No URL provided. Aborting config replacement."
+        if [[ -z "$config_url" ]]; then
+        log "Using built-in xray_config.json from ${INSTALL_DIR}/repo/xray_config.json"
+        cp "${INSTALL_DIR}/repo/xray_config.json" "${INSTALL_DIR}/xray_config.json" || error "Failed to copy built-in xray_config.json"
+        success "Built-in xray_config.json copied successfully"
+    else
         log "Downloading custom xray_config.json..."
         rm -f "${INSTALL_DIR}/xray_config.json"
         wget -q --show-progress "$config_url" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download xray_config.json"
@@ -378,7 +382,11 @@ update_marznode() {
     else
         local config_url
         read -p "Enter the URL for a custom xray_config.json: " config_url
-        [[ -z "$config_url" ]] && error "No URL provided. Aborting config replacement."
+        if [[ -z "$config_url" ]]; then
+        log "Using built-in xray_config.json from ${INSTALL_DIR}/repo/xray_config.json"
+        cp "${INSTALL_DIR}/repo/xray_config.json" "${INSTALL_DIR}/xray_config.json" || error "Failed to copy built-in xray_config.json"
+        success "Built-in xray_config.json copied successfully"
+    else
         log "Downloading custom xray_config.json..."
         rm -f "${INSTALL_DIR}/xray_config.json"
         wget -q --show-progress "$config_url" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download xray_config.json"
