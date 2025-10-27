@@ -126,7 +126,7 @@ get_certificate() {
         wget -q -O "${INSTALL_DIR}/client.pem" "$CLIENT_PEM_URL" || error "Failed to download client.pem from $CLIENT_PEM_URL"
         success "client.pem saved to ${INSTALL_DIR}/client.pem"
     else
-        log "Please paste the Marznode certificate from the panel (press Enter on an empty line to finish):"
+        log "Please paste the MarzNode certificate from the panel (press Enter on an empty line to finish):"
         > "${INSTALL_DIR}/client.pem"
         while IFS= read -r line; do
             [[ -z "$line" ]] && break
@@ -216,7 +216,7 @@ download_xray_core() {
             success "Built-in Xray binary installed."
         else
             rm -rf /tmp/marznode_repo
-            error "Built-in xray binary not found in app repo"
+            error "Built-in Xray binary not found in app repo"
         fi
         return
     fi
@@ -325,7 +325,7 @@ install_marznode() {
         if [[ -z "$config_url" ]]; then
         log "Using built-in xray_config.json from ${INSTALL_DIR}/repo/xray_config.json"
         cp "${INSTALL_DIR}/repo/xray_config.json" "${INSTALL_DIR}/xray_config.json" || error "Failed to copy built-in xray_config.json"
-        success "Built-in xray_config.json copied successfully"
+        success "Built-in Xray_config.json copied successfully"
     else
         log "Downloading custom xray_config.json..."
         rm -f "${INSTALL_DIR}/xray_config.json"
@@ -385,7 +385,7 @@ update_marznode() {
         if [[ -z "$config_url" ]]; then
         log "Using built-in xray_config.json from ${INSTALL_DIR}/repo/xray_config.json"
         cp "${INSTALL_DIR}/repo/xray_config.json" "${INSTALL_DIR}/xray_config.json" || error "Failed to copy built-in xray_config.json"
-        success "Built-in xray_config.json copied successfully"
+        success "Built-in Xray_config.json copied successfully"
     else
         log "Downloading custom xray_config.json..."
         rm -f "${INSTALL_DIR}/xray_config.json"
