@@ -3,88 +3,65 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# Ensure COLORS array is properly defined
+# ==============================================================================
+# MarzNode Installer / Manager
+# Version: v0.1.7
+# Notes:
+#  - Always refreshes certs/ from repo on install & update (no prompt)
+#  - client.pem: if Y/Enter => download default from repo; if N => prompt paste
+#  - Xray core:
+#      * If Y/Enter => download default release zip from GitHub (arch-aware)
+#      * If N and URL provided => download from given URL
+#      * If N and empty input => use built-in binary from app repo
+# ==============================================================================
+
+# Colors
 declare -r -A COLORS=(
-    [RED]='\033[0;31m'
-    [GREEN]='\033[0;32m'
-    [YELLOW]='\033[0;33m'
-    [BLUE]='\033[0;34m'
-    [PURPLE]='\033[0;35m'
-    [CYAN]='\033[0;36m'
+    [RED]='\033[0;31m',
+    [GREEN]='\033[0;32m',
+    [YELLOW]='\033[0;33m',
+    [BLUE]='\033[0;34m',
+    [PURPLE]='\033[0;35m',
+    [CYAN]='\033[0;36m',
     [RESET]='\033[0m'
 )
 
-# Check if COLORS array is defined correctly
 if [[ -z "${COLORS[BLUE]}" ]]; then
     echo "Error: COLORS array is not properly defined"
     exit 1
 fi
 
 SCRIPT_NAME="marznode"
-SCRIPT_VERSION="v0.1.4"
+SCRIPT_VERSION="v0.1.7"
 SCRIPT_URL="https://raw.githubusercontent.com/ali-ar1/marznode/main/install.sh"
 INSTALL_DIR="/var/lib/marznode"
-LOG_FILE="${INSTALL_DIR}/marznode.log"
 COMPOSE_FILE="${INSTALL_DIR}/docker-compose.yml"
-GITHUB_REPO="https://github.com/marzneshin/marznode.git"
-GITHUB_API="https://api.github.com/repos/XTLS/Xray-core/releases"
-DEFAULT_XRAY_CONFIG_URL="https://raw.githubusercontent.com/ali-ar1/marznode/main/xray_config.json"
-DEFAULT_CERTIFICATE="-----BEGIN CERTIFICATE-----
-MIIEnDCCAoQCAQAwDQYJKoZIhvcNAQENBQAwEzERMA8GA1UEAwwIR296YXJnYWgw
-IBcNMjQxMDE0MTExNTA5WhgPMjEyNDA5MjAxMTE1MDlaMBMxETAPBgNVBAMMCEdv
-emFyZ2FoMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAj6mbif/IaMJw
-i0UNzxcFzkYCe09HkdJp92U6xgaqE6fhUJOaRhPwLOnagJQopWR7yZlNaPa7/Nvc
-l7alVVVYdqPwlQLu06uIajdSQuwENxK6BSp60zHG7K2vL0365SRT/32g7FK6XS8z
-O96miDLWsMrIMRiGHlRAsJ7N8ReaKjaT6E9rKQPHhPGMAQOZPGE12iA0NbI9LZs2
-fXhSQgBs9T4b3XDQJArKPeFrdzT3kq2zkkvbpgwo/InEj7Jo/BxbG90wqFC5NKlb
-94pXu0rOUVIezdayAEejUAEyzA0gIP1+7/0XQMksJbLscI9sFl0SbjotrHg7Cyy6
-AKEnvQm2aMD4LQ6QHurKaW1BBF76N2nWuZOAB2gjXesjWeWT1c6zGgOvFg76MGJl
-lIF3qwrvuiOCAkQkNkLEF67suCbTD/1P01GgsA9jCaqzoID65UNMkAEPSAaNUcT3
-QhhIyOPKAlRSxNcTFj/PMAHves9fCmarrlcXpikhWXroR+NzCzphjswiK/twje0U
-BW+E/4H1DD3OXj8go5SZA3UG1H6aAq3RU+mRZq4bR8p0yluleIYAz1OoLHygq2s8
-bPtDuovZl6Rv2cfbsPD+8ucH0O6W8iA+eAb2r55u9++4pQK6VE1L+kGyon6H7FPm
-V1262ISvPg9BTdeNpSZlMeSfyJCToEsCAwEAATANBgkqhkiG9w0BAQ0FAAOCAgEA
-T1fSdCP8mt+mcFbdLDEs5Dyg/74WuL64ouB38saODH+xMBW4/SdTj+S65sOj8poY
-ef3sldMEc2xgv+sjXb5fSTdRqcTFTisS5CQaI+aKSPfXXV+JgmHM4t7991FDhARk
-lV9RxCOq+tLi96MtcKLdHOxU/Uf5f+B+BXG3U4ILItjBetXQGrUn83ZtMMeyYjB8
-b7vL9RuGr3Lrx6OldYTMSXFZ89eGhqjOFtEEAYU9xpF6XClyTU8xZ4eosRl7L3zM
-6GY2uP+3yeXz8tXfc8Noz/FAxD01SKkDOTyOUww+t8VxPKNdXCwKSrNd+EOTqUfH
-4iWN7W5z/CQk5KfhGpWYgHFI5TVRRF2+i2j2AE9voYt43BzZDI92gNqp2xsAUUa+
-SLoxPfQL9OL6vtssk54wkGIDC6q/GHOWNQ0ZRAqO20NgaFgODh961bUxV8lDymGI
-0vnfxCRpmo4OICxxdj950LXRQE9eBTqdKr3AUr2Ye8vp/9kSn5gqen0E73CrXJi/
-+BhecoOU+9/wO4lUmGmFlSD+b5IttfxcFhZXaSyvdtJrgcPy3bA+MI7iQiZ9u8nQ
-uwIBNqosV1N+hvnSCfOHyZCKQkuVuSVEmpCyZyMBoj8e0VGQPEpanQLPh9iQRVsk
-1561fl0TUmIzU1op1KbrW7r8bY9P2CQ4vehroL2/hHs=
------END CERTIFICATE-----"
 
-DEPENDENCIES=(
-    "docker"
-    "curl"
-    "wget"
-    "unzip"
-    "git"
-    "jq"
-)
+# GitHub paths
+GITHUB_REPO_APP="https://github.com/marzneshin/marznode.git"   # app repo (for built-in xray)
+GITHUB_API_XRAY="https://api.github.com/repos/XTLS/Xray-core/releases"
+DEFAULT_XRAY_CONFIG_URL="https://raw.githubusercontent.com/ali-ar1/marznode/main/xray_config.json"
+CLIENT_PEM_URL="https://raw.githubusercontent.com/ali-ar1/marznode/main/client.pem"
+CERTS_REPO="https://github.com/ali-ar1/marznode.git"
+CERTS_DIR_IN_REPO="certs"
+INSTALL_CERTS_DIR="${INSTALL_DIR}/certs"
+
+DEPENDENCIES=("docker" "curl" "wget" "unzip" "git" "jq")
 
 log() { echo -e "${COLORS[BLUE]}[INFO]${COLORS[RESET]} $*"; }
 warn() { echo -e "${COLORS[YELLOW]}[WARN]${COLORS[RESET]} $*" >&2; }
 error() { echo -e "${COLORS[RED]}[ERROR]${COLORS[RESET]} $*" >&2; exit 1; }
 success() { echo -e "${COLORS[GREEN]}[SUCCESS]${COLORS[RESET]} $*"; }
 
-check_root() {
-    [[ $EUID -eq 0 ]] || error "This script must be run as root"
-}
+check_root() { [[ $EUID -eq 0 ]] || error "This script must be run as root"; }
 
-show_version() {
-    log "MarzNode Script Version: $SCRIPT_VERSION"
-}
+show_version() { log "MarzNode Script Version: $SCRIPT_VERSION"; }
 
 update_script() {
     local script_path="/usr/local/bin/$SCRIPT_NAME"
-    
     if [[ -f "$script_path" ]]; then
         log "Updating the script..."
-        curl -o "$script_path" $SCRIPT_URL
+        curl -fsSL -o "$script_path" "$SCRIPT_URL" || error "Failed to download script"
         chmod +x "$script_path"
         success "Script updated to the latest version!"
         echo "Current version: $SCRIPT_VERSION"
@@ -108,10 +85,10 @@ check_dependencies() {
     docker compose version &>/dev/null || {
         log "Installing Docker Compose plugin..."
         mkdir -p /root/.docker/cli-plugins
-        curl -SL "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /root/.docker/cli-plugins/docker-compose
+        curl -fsSL "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /root/.docker/cli-plugins/docker-compose
         chmod +x /root/.docker/cli-plugins/docker-compose
-        local compose_version=$(docker compose version --short)
-        success "Docker Compose plugin version ${compose_version} installed."
+        local compose_version=$(docker compose version --short || true)
+        success "Docker Compose plugin ${compose_version:-installed}";
     }
 }
 
@@ -119,101 +96,148 @@ is_installed() { [[ -d "$INSTALL_DIR" && -f "$COMPOSE_FILE" ]]; }
 is_running() { docker ps | grep -q "marzneshin-marznode-1"; }
 
 create_directories() {
-    mkdir -p "$INSTALL_DIR" "${INSTALL_DIR}/data" "${INSTALL_DIR}/assets"
-    wget -O /var/lib/marznode/assets/geosite.dat https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat
-    wget -O /var/lib/marznode/assets/geoip.dat https://github.com/v2fly/geoip/releases/latest/download/geoip.dat
-    wget -O /var/lib/marznode/assets/iran.dat https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/iran.dat
+    mkdir -p "$INSTALL_DIR" "${INSTALL_DIR}/data" "${INSTALL_DIR}/assets" "$INSTALL_CERTS_DIR"
+    wget -q -O /var/lib/marznode/assets/geosite.dat https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat || true
+    wget -q -O /var/lib/marznode/assets/geoip.dat   https://github.com/v2fly/geoip/releases/latest/download/geoip.dat || true
+    wget -q -O /var/lib/marznode/assets/iran.dat    https://github.com/bootmortis/iran-hosted-domains/releases/latest/download/iran.dat || true
+}
+
+# --- Certs helpers ------------------------------------------------------------
+refresh_certs_folder() {
+    log "Refreshing SSL certs folder from repo..."
+    rm -rf /tmp/marznode_repo
+    git clone --depth=1 "$CERTS_REPO" /tmp/marznode_repo || error "Failed to clone certs repo $CERTS_REPO"
+    mkdir -p "$INSTALL_CERTS_DIR"
+    rm -rf "${INSTALL_CERTS_DIR:?}"/* || true
+    if [[ -d "/tmp/marznode_repo/${CERTS_DIR_IN_REPO}" ]]; then
+        cp -r "/tmp/marznode_repo/${CERTS_DIR_IN_REPO}/." "$INSTALL_CERTS_DIR/" || error "Failed to copy certs folder"
+        success "SSL certs copied to $INSTALL_CERTS_DIR"
+    else
+        warn "No '${CERTS_DIR_IN_REPO}' directory found in repo."
+    fi
+    rm -rf /tmp/marznode_repo || true
 }
 
 get_certificate() {
-    log "Do you want to use the default Marznode certificate? (y/N or press Enter for default):"
+    log "Do you want to use the default panel client.pem from repo? (y/N or press Enter for default):"
     read -r use_default
     if [[ $use_default =~ ^[Yy]$ ]] || [[ -z $use_default ]]; then
-        log "Using default certificate..."
-        echo "$DEFAULT_CERTIFICATE" > "${INSTALL_DIR}/client.pem"
-        success "Default certificate saved to ${INSTALL_DIR}/client.pem"
+        log "Downloading default client.pem..."
+        wget -q -O "${INSTALL_DIR}/client.pem" "$CLIENT_PEM_URL" || error "Failed to download client.pem from $CLIENT_PEM_URL"
+        success "client.pem saved to ${INSTALL_DIR}/client.pem"
     else
-        log "Please paste the Marznode certificate from the Marzneshin panel (press Enter on an empty line to finish):"
+        log "Please paste the Marznode certificate from the panel (press Enter on an empty line to finish):"
         > "${INSTALL_DIR}/client.pem"
         while IFS= read -r line; do
-            if [[ -z "$line" ]]; then
-                break
-            fi
+            [[ -z "$line" ]] && break
             echo "$line" >> "${INSTALL_DIR}/client.pem"
         done
         echo
-        success "Certificate saved to ${INSTALL_DIR}/client.pem"
+        success "Custom client.pem saved to ${INSTALL_DIR}/client.pem"
     fi
+    refresh_certs_folder
 }
 
 show_xray_versions() {
     log "Available Xray versions:"
-    curl -s "$GITHUB_API" | jq -r '.[0:20] | .[] | .tag_name' | nl
+    curl -s "$GITHUB_API_XRAY" | jq -r '.[0:20] | .[] | .tag_name' | nl
 }
 
-select_xray_version() {
+# --- Xray selection per user's rule ------------------------------------------
+select_xray_version_and_source() {
     show_xray_versions
     local choice
     read -p "Select Xray version (1-20): " choice
-    local selected_version=$(curl -s "$GITHUB_API" | jq -r ".[0:20] | .[$((choice-1))] | .tag_name")
-
+    local selected_version=$(curl -s "$GITHUB_API_XRAY" | jq -r ".[0:20] | .[$((choice-1))] | .tag_name")
+    [[ -z "$selected_version" || "$selected_version" == "null" ]] && error "Invalid selection"
     echo "Selected Xray version: $selected_version"
+
     while true; do
-        read -p "Confirm selection? (Y/n): " confirm
-        if [[ $confirm =~ ^[Yy]$ ]] || [[ -z $confirm ]]; then
-            download_xray_core "$selected_version"
+        read -p "Use default GitHub download link? (Y/n): " yn
+        if [[ $yn =~ ^[Yy]$ ]] || [[ -z $yn ]]; then
+            XRAY_DOWNLOAD_MODE="default"
+            XRAY_SELECTED_VERSION="$selected_version"
+            XRAY_CUSTOM_URL=""
             return 0
-        elif [[ $confirm =~ ^[Nn]$ ]]; then
-            echo "Selection cancelled. Please choose again."
-            return 1
+        elif [[ $yn =~ ^[Nn]$ ]]; then
+            read -p "Enter custom Xray URL (press Enter to use built-in binary from app repo): " custom_url
+            if [[ -z "$custom_url" ]]; then
+                XRAY_DOWNLOAD_MODE="builtin"
+                XRAY_SELECTED_VERSION="$selected_version"
+                XRAY_CUSTOM_URL=""
+                return 0
+            else
+                XRAY_DOWNLOAD_MODE="custom"
+                XRAY_SELECTED_VERSION="$selected_version"
+                XRAY_CUSTOM_URL="$custom_url"
+                return 0
+            fi
         else
             echo "Invalid input. Please enter Y or n."
         fi
     done
 }
 
-download_xray_core() {
-    local version="$1"
+resolve_arch() {
     case "$(uname -m)" in
-        'i386' | 'i686') arch='32' ;;
-        'amd64' | 'x86_64') arch='64' ;;
-        'armv5tel') arch='arm32-v5' ;;
-        'armv6l')
-        arch='arm32-v6'
-        grep Features /proc/cpuinfo | grep -qw 'vfp' || arch='arm32-v5'
-        ;;
-        'armv7' | 'armv7l')
-        arch='arm32-v7a'
-        grep Features /proc/cpuinfo | grep -qw 'vfp' || arch='arm32-v5'
-        ;;
-        'armv8' | 'aarch64') arch='arm64-v8a' ;;
-        'mips') arch='mips32' ;;
-        'mipsle') arch='mips32le' ;;
-        'mips64')
-        arch='mips64'
-        lscpu | grep -q "Little Endian" && arch='mips64le'
-        ;;
-        'mips64le') arch='mips64le' ;;
-        'ppc64') arch='ppc64' ;;
-        'ppc64le') arch='ppc64le' ;;
-        'riscv64') arch='riscv64' ;;
-        's390x') arch='s390x' ;;
-        *)
-        error "The architecture is not supported."
-        exit 1
-        ;;
+        'i386'|'i686') echo '32' ;;
+        'amd64'|'x86_64') echo '64' ;;
+        'armv5tel') echo 'arm32-v5' ;;
+        'armv6l') grep Features /proc/cpuinfo | grep -qw 'vfp' && echo 'arm32-v6' || echo 'arm32-v5' ;;
+        'armv7'|'armv7l') grep Features /proc/cpuinfo | grep -qw 'vfp' && echo 'arm32-v7a' || echo 'arm32-v5' ;;
+        'armv8'|'aarch64') echo 'arm64-v8a' ;;
+        'mips') echo 'mips32' ;;
+        'mipsle') echo 'mips32le' ;;
+        'mips64') lscpu | grep -q "Little Endian" && echo 'mips64le' || echo 'mips64' ;;
+        'mips64le') echo 'mips64le' ;;
+        'ppc64') echo 'ppc64' ;;
+        'ppc64le') echo 'ppc64le' ;;
+        'riscv64') echo 'riscv64' ;;
+        's390x') echo 's390x' ;;
+        *) error "Unsupported architecture" ;;
     esac
-    local xray_filename="Xray-linux-${arch}.zip"
-    local download_url="https://github.com/XTLS/Xray-core/releases/download/${version}/${xray_filename}"
+}
 
-    wget -q --show-progress "$download_url" -O "/tmp/${xray_filename}"
-    unzip -o "/tmp/${xray_filename}" -d "${INSTALL_DIR}"
-    rm "/tmp/${xray_filename}"
+download_xray_core() {
+    local mode="$1"          # default|custom|builtin
+    local version="$2"       # tag like v1.x.x
+    local custom_url="${3:-}"
+    local arch
+    arch=$(resolve_arch)
 
-    chmod +x "${INSTALL_DIR}/xray"
+    if [[ "$mode" == "builtin" ]]; then
+        log "Using built-in Xray core binary from app repo..."
+        rm -rf /tmp/marznode_repo
+        git clone --depth=1 "$GITHUB_REPO_APP" /tmp/marznode_repo || error "Failed to clone app repo"
+        if [[ -f /tmp/marznode_repo/xray ]]; then
+            cp /tmp/marznode_repo/xray "$INSTALL_DIR/xray" || error "Failed to copy built-in Xray binary"
+            chmod +x "$INSTALL_DIR/xray"
+            rm -rf /tmp/marznode_repo
+            success "Built-in Xray binary installed."
+        else
+            rm -rf /tmp/marznode_repo
+            error "Built-in xray binary not found in app repo"
+        fi
+        return
+    fi
 
-    wget -q --show-progress "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat" -O "${INSTALL_DIR}/data/geoip.dat"
-    wget -q --show-progress "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat" -O "${INSTALL_DIR}/data/geosite.dat"
+    local url
+    if [[ "$mode" == "custom" ]]; then
+        url="$custom_url"
+    else
+        local xray_filename="Xray-linux-${arch}.zip"
+        url="https://github.com/XTLS/Xray-core/releases/download/${version}/${xray_filename}"
+    fi
+
+    log "Downloading Xray core from: $url"
+    wget -q --show-progress "$url" -O "/tmp/xray.zip" || error "Failed to download Xray core"
+    unzip -o "/tmp/xray.zip" -d "$INSTALL_DIR" || error "Failed to unzip Xray"
+    rm -f /tmp/xray.zip
+    chmod +x "$INSTALL_DIR/xray"
+
+    # Refresh rule datasets
+    wget -q --show-progress "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"   -O "${INSTALL_DIR}/data/geoip.dat" || true
+    wget -q --show-progress "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat" -O "${INSTALL_DIR}/data/geosite.dat" || true
 
     success "Xray-core ${version} installed successfully."
 }
@@ -274,7 +298,6 @@ install_marznode() {
     while true; do
         read -p "Enter the service port (default: 5566): " port
         port=${port:-5566}
-        
         if ! ss -tuln | grep -q ":$port "; then
             break
         else
@@ -283,58 +306,51 @@ install_marznode() {
     done
     echo
 
-    if [ -d "${INSTALL_DIR}/repo" ]; then
-        rm -rf "${INSTALL_DIR}/repo"
-    fi
-    git clone "$GITHUB_REPO" "${INSTALL_DIR}/repo"
-    cp "${INSTALL_DIR}/repo/xray_config.json" "${INSTALL_DIR}/xray_config.json"
-    
+    # clone app repo to fetch default xray_config and/or built-in xray
+    rm -rf "${INSTALL_DIR}/repo" || true
+    git clone "$GITHUB_REPO_APP" "${INSTALL_DIR}/repo" || error "Failed to clone app repo"
+    cp "${INSTALL_DIR}/repo/xray_config.json" "${INSTALL_DIR}/xray_config.json" || true
+
     local replace_config
-    read -p "Do you want to use the default xray_config.json? (y/N or press Enter for default): " replace_config
+    read -p "Use default xray_config.json from ${DEFAULT_XRAY_CONFIG_URL}? (y/N or Enter for default): " replace_config
     if [[ $replace_config =~ ^[Yy]$ ]] || [[ -z $replace_config ]]; then
-        log "Downloading default xray_config.json from $DEFAULT_XRAY_CONFIG_URL..."
+        log "Downloading default xray_config.json..."
         rm -f "${INSTALL_DIR}/xray_config.json"
-        wget -q --show-progress "$DEFAULT_XRAY_CONFIG_URL" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download default xray_config.json from $DEFAULT_XRAY_CONFIG_URL"
+        wget -q --show-progress "$DEFAULT_XRAY_CONFIG_URL" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download default xray_config.json"
         jq . "${INSTALL_DIR}/xray_config.json" > /dev/null 2>&1 || error "Downloaded xray_config.json is not a valid JSON file"
         success "Default xray_config.json downloaded successfully"
     else
         local config_url
-        read -p "Enter the URL for the new xray_config.json: " config_url
-        if [[ -n "$config_url" ]]; then
-            log "Downloading new xray_config.json from $config_url..."
-            rm -f "${INSTALL_DIR}/xray_config.json"
-            wget -q --show-progress "$config_url" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download xray_config.json from $config_url"
-            jq . "${INSTALL_DIR}/xray_config.json" > /dev/null 2>&1 || error "Downloaded xray_config.json is not a valid JSON file"
-            success "xray_config.json downloaded successfully"
-        else
-            error "No URL provided. Aborting config replacement."
-        fi
+        read -p "Enter the URL for a custom xray_config.json: " config_url
+        [[ -z "$config_url" ]] && error "No URL provided. Aborting config replacement."
+        log "Downloading custom xray_config.json..."
+        rm -f "${INSTALL_DIR}/xray_config.json"
+        wget -q --show-progress "$config_url" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download xray_config.json"
+        jq . "${INSTALL_DIR}/xray_config.json" > /dev/null 2>&1 || error "Downloaded xray_config.json is not a valid JSON file"
+        success "Custom xray_config.json downloaded successfully"
     fi
 
-    while true; do
-        if select_xray_version; then
-            break
-        fi
-    done
-        
+    # Choose and install Xray per rules
+    select_xray_version_and_source
+    download_xray_core "$XRAY_DOWNLOAD_MODE" "$XRAY_SELECTED_VERSION" "$XRAY_CUSTOM_URL"
+
     setup_docker_compose "$port"
-    
     docker compose -f "$COMPOSE_FILE" up -d
-    
+
     if command -v ufw &> /dev/null; then
-        ufw allow "$port"
+        ufw allow "$port" || true
         log "Firewall rule added for port $port"
     else
-        warn "ufw not found. Please manually open port $INSTALL_DIR in your firewall."
+        warn "ufw not found. Please manually open port $port in your firewall."
     fi
-    
+
     success "MarzNode installed successfully!"
 }
 
 uninstall_marznode() {
     log "Uninstalling MarzNode..."
     if [[ -f "$COMPOSE_FILE" ]]; then
-        docker compose -f "$COMPOSE_FILE" down --remove-orphans
+        docker compose -f "$COMPOSE_FILE" down --remove-orphans || true
     fi
     rm -rf "$INSTALL_DIR"
     success "MarzNode uninstalled successfully"
@@ -349,39 +365,36 @@ update_marznode() {
     log "Updating MarzNode..."
 
     log "Pulling latest MarzNode Docker image..."
-    docker compose -f "$COMPOSE_FILE" pull || error "Failed to pull latest Docker image."
+    docker compose -f "$COMPOSE_FILE" pull || warn "Failed to pull latest Docker image. Continuing..."
 
     local replace_config
-    read -p "Do you want to use the default xray_config.json? (y/N or press Enter for default): " replace_config
+    read -p "Use default xray_config.json from ${DEFAULT_XRAY_CONFIG_URL}? (y/N or Enter for default): " replace_config
     if [[ $replace_config =~ ^[Yy]$ ]] || [[ -z $replace_config ]]; then
-        log "Downloading default xray_config.json from $DEFAULT_XRAY_CONFIG_URL..."
+        log "Downloading default xray_config.json..."
         rm -f "${INSTALL_DIR}/xray_config.json"
-        wget -q --show-progress "$DEFAULT_XRAY_CONFIG_URL" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download default xray_config.json from $DEFAULT_XRAY_CONFIG_URL"
+        wget -q --show-progress "$DEFAULT_XRAY_CONFIG_URL" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download default xray_config.json"
         jq . "${INSTALL_DIR}/xray_config.json" > /dev/null 2>&1 || error "Downloaded xray_config.json is not a valid JSON file"
         success "Default xray_config.json downloaded successfully"
     else
         local config_url
-        read -p "Enter the URL for the new xray_config.json: " config_url
-        if [[ -n "$config_url" ]]; then
-            log "Downloading new xray_config.json from $config_url..."
-            rm -f "${INSTALL_DIR}/xray_config.json"
-            wget -q --show-progress "$config_url" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download xray_config.json from $config_url"
-            jq . "${INSTALL_DIR}/xray_config.json" > /dev/null 2>&1 || error "Downloaded xray_config.json is not a valid JSON file"
-            success "xray_config.json downloaded successfully"
-        else
-            error "No URL provided. Aborting config replacement."
-        fi
+        read -p "Enter the URL for a custom xray_config.json: " config_url
+        [[ -z "$config_url" ]] && error "No URL provided. Aborting config replacement."
+        log "Downloading custom xray_config.json..."
+        rm -f "${INSTALL_DIR}/xray_config.json"
+        wget -q --show-progress "$config_url" -O "${INSTALL_DIR}/xray_config.json" || error "Failed to download xray_config.json"
+        jq . "${INSTALL_DIR}/xray_config.json" > /dev/null 2>&1 || error "Downloaded xray_config.json is not a valid JSON file"
+        success "Custom xray_config.json downloaded successfully"
     fi
 
-    log "Selecting new Xray version..."
-    while true; do
-        if select_xray_version; then
-            break
-        fi
-    done
+    # Refresh client.pem (prompted) and certs folder (always)
+    get_certificate
+
+    # Choose and install Xray per rules
+    select_xray_version_and_source
+    download_xray_core "$XRAY_DOWNLOAD_MODE" "$XRAY_SELECTED_VERSION" "$XRAY_CUSTOM_URL"
 
     log "Restarting MarzNode service..."
-    docker compose -f "$COMPOSE_FILE" down
+    docker compose -f "$COMPOSE_FILE" down || true
     docker compose -f "$COMPOSE_FILE" up -d || error "Failed to restart MarzNode service."
 
     success "MarzNode updated successfully!"
@@ -393,7 +406,7 @@ manage_service() {
         return 1
     fi
 
-    local action=$1
+    local action=${1:-}
     case "$action" in
         start)
             if is_running; then
@@ -415,9 +428,12 @@ manage_service() {
             ;;
         restart)
             log "Restarting MarzNode..."
-            docker compose -f "$COMPOSE_FILE" down
+            docker compose -f "$COMPOSE_FILE" down || true
             docker compose -f "$COMPOSE_FILE" up -d
             success "MarzNode restarted"
+            ;;
+        *)
+            print_help
             ;;
     esac
 }
@@ -427,7 +443,6 @@ show_status() {
         error "Status: Not Installed"
         return 1
     fi
-
     if is_running; then
         success "Status: Up and Running [uptime: $(docker ps --filter "name=marzneshin-marznode-1" --format "{{.Status}}")]"
     else
@@ -442,16 +457,15 @@ show_logs() {
 
 install_script() {
     local script_path="/usr/local/bin/$SCRIPT_NAME"
-    
-    curl -s -o "$script_path" $SCRIPT_URL
+    curl -fsSL -o "$script_path" "$SCRIPT_URL" || error "Failed to download script"
     chmod +x "$script_path"
-    success "Script installed successfully. You can now use '$SCRIPT_NAME' command from anywhere."
+    success "Script installed successfully. You can now use '$SCRIPT_NAME' from anywhere."
 }
 
 uninstall_script() {
     local script_path="/usr/local/bin/$SCRIPT_NAME"
     if [[ -f "$script_path" ]]; then
-        rm "$script_path"
+        rm -f "$script_path"
         success "Script uninstalled successfully from $script_path"
     else
         warn "Script not found at $script_path. Nothing to uninstall."
@@ -481,12 +495,10 @@ print_help() {
 
 main() {
     check_root
-
     if [[ $# -eq 0 ]]; then
         print_help
         exit 0
     fi
-
     case "$1" in
         install)         install_marznode ;;
         uninstall)       uninstall_marznode ;;
