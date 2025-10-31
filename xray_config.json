@@ -165,6 +165,82 @@
         "tcpNoDelay": false
       }
     },
+     {
+            "tag": "VLESS+XHTTP+REALITY+8443",
+            "listen": "0.0.0.0",
+            "port": 8443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [],
+                "decryption": "none",
+                "fallbacks": []
+            },
+            "streamSettings": {
+                "network": "xhttp",
+                "security": "reality",
+                "externalProxy": [],
+                "realitySettings": {
+                    "show": false,
+                    "xver": 0,
+                    "dest": "connectivitycheck.gstatic.com:443",
+                    "serverNames": [
+                        "connectivitycheck.gstatic.com"
+                    ],
+                    "privateKey": "EBNmuJI5MW0ZHByX2SNER_bzCjs3ec5AkaA_l2tbxnE",
+                    "minClient": "",
+                    "maxClient": "",
+                    "maxTimediff": 0,
+                    "shortIds": [
+                        "1e5f040eb8eb7303"
+                    ],
+                    "settings": {
+                        "publicKey": "51Xw-AXk7vrl4G31lm4YO-YE0SwmNO2xHiz7nXC6gXU",
+                        "fingerprint": "firefox",
+                        "serverName": "",
+                        "spiderX": "/generate_204"
+                    }
+                },
+                "xhttpSettings": {
+                    "path": "/Www.fast.com.live.sKornorth.com.Zula.ir?ed=2048",
+                    "host": "",
+                    "headers": {},
+                    "scMaxBufferedPosts": 30,
+                    "scMaxEachPostBytes": "1000000",
+                    "noSSEHeader": false,
+                    "xPaddingBytes": "100-1000",
+                    "mode": "auto"
+                }
+            },
+            "sniffing": {
+                "enabled": false,
+                "destOverride": [
+                    "http",
+                    "tls",
+                    "quic",
+                    "fakedns"
+                ],
+                "metadataOnly": false,
+                "routeOnly": false
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
+            }
+        },
             {
             "tag": "VLESS+XHTTP+TLS",
             "listen": "0.0.0.0",
