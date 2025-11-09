@@ -176,7 +176,7 @@
             {
             "tag": "VLESS+XHTTP+TLS",
             "listen": "0.0.0.0",
-            "port": 8443,
+            "port": 2053,
             "protocol": "vless",
             "settings": {
                 "clients": [],
