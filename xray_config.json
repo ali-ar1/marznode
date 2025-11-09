@@ -1,8 +1,8 @@
 {
-"log": {
-  "access": "none",
-  "error": "stderr",
-  "loglevel": "warning"
+    "log": {
+        "access": "none",
+        "error": "stderr",
+        "loglevel": "warning"
     },
     "dns": {
         "servers": [
@@ -26,89 +26,97 @@
         "disableFallback": false,
         "disableFallbackIfMatch": false
     },
-  "policy": {
-    "levels": {
-      "0": {
-        "handshake": 2,
-        "connIdle": 120,
-        "uplinkOnly": 4,
-        "downlinkOnly": 5,
-        "bufferSize": 16,
-        "statsUserUplink": true,
-        "statsUserDownlink": true,
-        "statsUserOnline": true
-      }
+    "policy": {
+        "levels": {
+            "0": {
+                "handshake": 2,
+                "connIdle": 120,
+                "uplinkOnly": 4,
+                "downlinkOnly": 5,
+                "bufferSize": 16,
+                "statsUserUplink": true,
+                "statsUserDownlink": true,
+                "statsUserOnline": true
+            }
+        },
+        "system": {
+            "statsInboundUplink": true,
+            "statsInboundDownlink": true,
+            "statsOutboundUplink": true,
+            "statsOutboundDownlink": true
+        }
     },
-    "system": {
-      "statsInboundUplink": true,
-      "statsInboundDownlink": true,
-      "statsOutboundUplink": true,
-      "statsOutboundDownlink": true
-    }
-  },
-  "routing": {
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
-      {
-        "type": "field",
-        "outboundTag": "blackhole",
-        "ip": [
-          "geoip:private",
-          "geoip:ir"
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "domain": [
+                    "arv.farzanofficefurniture.ir",
+                    "my.irancell.ir"
+                ],
+                "outboundTag": "direct"
+            },
+            {
+                "type": "field",
+                "outboundTag": "blackhole",
+                "ip": [
+                    "geoip:private",
+                    "geoip:ir"
+                ]
+            },
+            {
+                "type": "field",
+                "port": "53,853",
+                "network": "tcp,udp",
+                "outboundTag": "DNS-Internal"
+            },
+            {
+                "type": "field",
+                "outboundTag": "blackhole",
+                "protocol": [
+                    "bittorrent"
+                ]
+            },
+            {
+                "outboundTag": "blackhole",
+                "domain": [
+                    "regexp:.*\\.ir$",
+                    "ext:iran.dat:ir",
+                    "ext:iran.dat:other",
+                    "geosite:category-ir",
+                    "blogfa",
+                    "bank",
+                    "tebyan.net",
+                    "beytoote.com",
+                    "Film2movie.ws",
+                    "Setare.com",
+                    "downloadha.com",
+                    "Sanjesh.org"
+                ],
+                "type": "field"
+            },
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:private"
+                ],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "network": "udp",
+                "port": "443",
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "network": "udp",
+                "port": "853",
+                "outboundTag": "block"
+            }
         ]
-      },
-      {
-        "type": "field",
-        "port": "53,853",
-        "network": "tcp,udp",
-        "outboundTag": "DNS-Internal"
-      },
-      {
-        "type": "field",
-        "outboundTag": "blackhole",
-        "protocol": [
-          "bittorrent"
-        ]
-      },
-      {
-        "outboundTag": "blackhole",
-        "domain": [
-          "regexp:.*\\.ir$",
-          "ext:iran.dat:ir",
-          "ext:iran.dat:other",
-          "geosite:category-ir",
-          "blogfa",
-          "bank",
-          "tebyan.net",
-          "beytoote.com",
-          "Film2movie.ws",
-          "Setare.com",
-          "downloadha.com",
-          "Sanjesh.org"
-        ],
-        "type": "field"
-      },
-      {
-        "type": "field",
-        "ip": [
-          "geoip:private"
-        ],
-        "outboundTag": "block"
-      },
-      {
-        "type": "field",
-        "network": "udp",
-        "port": "443",
-        "outboundTag": "block"
-      },
-      {
-        "type": "field",
-        "network": "udp",
-        "port": "853",
-        "outboundTag": "block"
-      }
-    ]
-  },
+    },
   "inbounds": [
     {
       "tag": "vmess",
