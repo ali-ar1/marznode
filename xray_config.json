@@ -15,7 +15,9 @@
                     "youtubeadservice.com",
                     "adservice.google.com",
                     "googlesyndication.com",
-                    "doubleclick.net"
+                    "doubleclick.net",
+                    "aistudio.google.com",
+                    "gemini.google.com"
                 ],
                 "address": "https://dns.dynx.pro/dns-query",
                 "queryStrategy": "ForceIPv4v6"
