@@ -53,17 +53,17 @@
         "rules": [
     {
         "type": "field",
-        "network": "udp",
-        "port": "443,853",
-        "outboundTag": "block"
-    },
-    {
-        "type": "field",
         "domain": [
             "arv.farzanofficefurniture.ir",
             "my.irancell.ir"
         ],
-        "outboundTag": "direct"
+        "outboundTag": "DIRECT"
+    },
+    {
+        "type": "field",
+        "network": "udp",
+        "port": "443,853",
+        "outboundTag": "block"
     },
     {
         "type": "field",
@@ -103,13 +103,6 @@
             "Sanjesh.org"
         ],
         "type": "field"
-    },
-    {
-        "type": "field",
-        "ip": [
-            "geoip:private"
-        ],
-        "outboundTag": "block"
     }
 ]
     },
