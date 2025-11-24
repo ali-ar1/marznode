@@ -11,22 +11,18 @@
             "1.1.1.1",
             "1.0.0.1",
             {
-                "domains": [
-                    "youtubeadservice.com",
-                    "adservice.google.com",
-                    "googlesyndication.com",
-                    "doubleclick.net",
-                    "aistudio.google.com",
-                    "gemini.google.com"
-                ],
-                "address": "https://dns.dynx.pro/dns-query",
-                "queryStrategy": "ForceIPv4v6"
-            }
+                        "domains": [
+          "youtubeadservice.com",
+          "adservice.google.com",
+          "googlesyndication.com",
+          "doubleclick.net",
+          "aistudio.google.com",
+          "gemini.google.com"
         ],
-        "queryStrategy": "ForceIPv4v6",
-        "disableCache": false,
-        "disableFallback": false,
-        "disableFallbackIfMatch": false
+        "address": "https://dns.dynx.pro/dns-query"
+      }
+        ],
+        "queryStrategy": "ForceIPv4v6"
     },
     "policy": {
         "levels": {
@@ -49,16 +45,8 @@
         }
     },
     "routing": {
-        "domainStrategy": "IPIfNonMatch",
+        "domainStrategy": "AsIs",
         "rules": [
-    {
-        "type": "field",
-        "domain": [
-            "arv.farzanofficefurniture.ir",
-            "my.irancell.ir"
-        ],
-        "outboundTag": "DIRECT"
-    },
     {
         "type": "field",
         "network": "udp",
@@ -67,11 +55,8 @@
     },
     {
         "type": "field",
-        "outboundTag": "blackhole",
-        "ip": [
-            "geoip:private",
-            "geoip:ir"
-        ]
+        "outboundTag": "block",
+        "ip": ["geoip:private"]
     },
     {
         "type": "field",
@@ -81,28 +66,8 @@
     },
     {
         "type": "field",
-        "outboundTag": "blackhole",
-        "protocol": [
-            "bittorrent"
-        ]
-    },
-    {
-        "outboundTag": "blackhole",
-        "domain": [
-            "regexp:.*\\.ir$",
-            "ext:iran.dat:ir",
-            "ext:iran.dat:other",
-            "geosite:category-ir",
-            "blogfa",
-            "bank",
-            "tebyan.net",
-            "beytoote.com",
-            "Film2movie.ws",
-            "Setare.com",
-            "downloadha.com",
-            "Sanjesh.org"
-        ],
-        "type": "field"
+        "outboundTag": "block",
+        "protocol": ["bittorrent"]
     }
 ]
     },
@@ -430,10 +395,6 @@
     {
       "protocol": "dns",
       "tag": "DNS-Internal"
-    },
-    {
-      "protocol": "blackhole",
-      "tag": "blackhole"
     },
     {
       "protocol": "blackhole",
