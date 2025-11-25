@@ -5,7 +5,7 @@
         "loglevel": "warning"
     },
 "dns": {
-  "queryStrategy": "ForceIPv4v6",
+  "queryStrategy": "UseIPv4v6:",
   "disableCache": false,
   "disableFallback": false,
   "disableFallbackIfMatch": true,
@@ -403,7 +403,7 @@
       "protocol": "freedom",
       "tag": "DIRECT",
       "settings": {
-        "domainStrategy": "ForceIPv4v6"
+        "domainStrategy": "UseIPv4v6"
       }
     },
     {
