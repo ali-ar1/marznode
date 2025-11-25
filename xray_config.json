@@ -4,48 +4,30 @@
         "error": "stderr",
         "loglevel": "warning"
     },
-  "dns": {
-    "queryStrategy": "ForceIPv4v6",
-    "disableCache": false,
-    "disableFallback": false,
-    "disableFallbackIfMatch": true,
-    "clientIp": "1.1.1.1",
+"dns": {
+  "queryStrategy": "ForceIPv4v6",
+  "disableCache": false,
+  "disableFallback": false,
+  "disableFallbackIfMatch": true,
 
-    "servers": [
-      {
-        "address": "1.1.1.1",
-        "port": 53
-      },
-      {
-        "address": "1.0.0.1",
-        "port": 53
-      },
-      {
-        "address": "8.8.8.8",
-        "port": 53
-      },
-      {
-        "address": "8.8.4.4",
-        "port": 53
-      },
-      {
-        "address": "https://dns.dynx.pro/dns-query",
-        "domains": [
-          "youtubeadservice.com",
-          "adservice.google.com",
-          "googlesyndication.com",
-          "doubleclick.net",
-          "youtube.com",
-          "redirector.googlevideo.com",
-          "youtubei.googleapis.com",
-          "s.youtube.com",
-          "www.youtube.com",
-          "music.youtube.com",
-          "aistudio.google.com"],
-        "skipFallback": true
-      }
-    ]
-  },
+  "servers": [
+    "8.8.8.8",
+    "8.8.4.4",
+    "1.1.1.1",
+    "1.0.0.1",
+    {
+      "address": "https://dns.dynx.pro/dns-query",
+      "domains": [
+        "youtubeadservice.com",
+        "adservice.google.com",
+        "googlesyndication.com",
+        "doubleclick.net",
+        "aistudio.google.com"
+      ],
+      "skipFallback": true
+    }
+  ]
+},
     "policy": {
         "levels": {
             "0": {
