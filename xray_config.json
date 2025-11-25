@@ -41,8 +41,7 @@
           "s.youtube.com",
           "www.youtube.com",
           "music.youtube.com",
-          "aistudio.google.com"
-        ],
+          "aistudio.google.com"],
         "skipFallback": true
       }
     ]
@@ -94,8 +93,9 @@
         "type": "field",
         "domain": [
           "gemini.google.com",
-          "www.iconfinder.com"
-        ],
+          "www.iconfinder.com",
+          "iconfinder.com",
+          "www.iconfinder.com"],
         "outboundTag": "warp"
       },
 
