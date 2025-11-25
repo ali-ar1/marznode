@@ -75,30 +75,27 @@
         "network": "tcp,udp",
         "outboundTag": "DNS-Internal"
       },
-
       {
         "type": "field",
         "outboundTag": "block",
         "protocol": ["bittorrent"]
       },
-
       {
         "type": "field",
         "network": "udp",
         "port": "443,853",
         "outboundTag": "block"
       },
-
-      {
-        "type": "field",
-        "domain": [
-          "gemini.google.com",
-          "www.iconfinder.com",
-          "iconfinder.com",
-          "www.iconfinder.com"],
-        "outboundTag": "warp"
-      },
-
+     {
+  "type": "field",
+  "domain": [
+    "gemini.google.com",
+    "www.iconfinder.com",
+    "iconfinder.com",
+    "geosite:spotify"
+  ],
+  "outboundTag": "warp"
+},
       {
         "type": "field",
         "ip": ["geoip:private"],
