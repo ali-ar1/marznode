@@ -4,26 +4,49 @@
         "error": "stderr",
         "loglevel": "warning"
     },
-    "dns": {
-        "servers": [
-            "8.8.8.8",
-            "8.8.4.4",
-            "1.1.1.1",
-            "1.0.0.1",
-            {
-                        "domains": [
+  "dns": {
+    "queryStrategy": "ForceIPv4v6",
+    "disableCache": false,
+    "disableFallback": false,
+    "disableFallbackIfMatch": true,
+    "clientIp": "1.1.1.1",
+
+    "servers": [
+      {
+        "address": "1.1.1.1",
+        "port": 53
+      },
+      {
+        "address": "1.0.0.1",
+        "port": 53
+      },
+      {
+        "address": "8.8.8.8",
+        "port": 53
+      },
+      {
+        "address": "8.8.4.4",
+        "port": 53
+      },
+      {
+        "address": "https://dns.dynx.pro/dns-query",
+        "domains": [
           "youtubeadservice.com",
           "adservice.google.com",
           "googlesyndication.com",
           "doubleclick.net",
-          "aistudio.google.com",
-          "gemini.google.com"
+          "youtube.com",
+          "redirector.googlevideo.com",
+          "youtubei.googleapis.com",
+          "s.youtube.com",
+          "www.youtube.com",
+          "music.youtube.com",
+          "aistudio.google.com"
         ],
-        "address": "https://dns.dynx.pro/dns-query"
+        "skipFallback": true
       }
-        ],
-        "queryStrategy": "ForceIPv4v6"
-    },
+    ]
+  },
     "policy": {
         "levels": {
             "0": {
@@ -47,30 +70,42 @@
     "routing": {
         "domainStrategy": "AsIs",
         "rules": [
-    {
-        "type": "field",
-        "network": "udp",
-        "port": "443,853",
-        "outboundTag": "block"
-    },
-    {
-        "type": "field",
-        "outboundTag": "block",
-        "ip": ["geoip:private"]
-    },
-    {
+  {
         "type": "field",
         "port": "53,853",
         "network": "tcp,udp",
         "outboundTag": "DNS-Internal"
-    },
-    {
+      },
+
+      {
         "type": "field",
         "outboundTag": "block",
         "protocol": ["bittorrent"]
-    }
-]
-    },
+      },
+
+      {
+        "type": "field",
+        "network": "udp",
+        "port": "443,853",
+        "outboundTag": "block"
+      },
+
+      {
+        "type": "field",
+        "domain": [
+          "gemini.google.com",
+          "www.iconfinder.com"
+        ],
+        "outboundTag": "warp"
+      },
+
+      {
+        "type": "field",
+        "ip": ["geoip:private"],
+        "outboundTag": "block"
+      }
+    ]
+   },
   "inbounds": [
     {
       "tag": "vmess",
@@ -399,6 +434,18 @@
     {
       "protocol": "blackhole",
       "tag": "block"
+    },
+    {
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 10808
+          }
+        ]
+      },
+      "tag": "warp"
     }
   ]
 }
