@@ -21,8 +21,7 @@
         "youtubeadservice.com",
         "adservice.google.com",
         "googlesyndication.com",
-        "doubleclick.net",
-        "aistudio.google.com"
+        "doubleclick.net"
       ],
       "skipFallback": true
     }
@@ -74,7 +73,10 @@
     "gemini.google.com",
     "www.iconfinder.com",
     "iconfinder.com",
-    "geosite:spotify"
+    "geosite:spotify",
+    "aistudio.google.com",
+    "labs.google",
+    "notebooklm.google"
   ],
   "outboundTag": "warp"
 },
