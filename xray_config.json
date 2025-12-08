@@ -1,56 +1,55 @@
 {
-    "log": {
-        "access": "none",
-        "error": "stderr",
-        "loglevel": "warning"
+  "log": {
+    "access": "none",
+    "error": "stderr",
+    "loglevel": "warning"
+  },
+  "dns": {
+    "queryStrategy": "UseIPv4v6:",
+    "disableCache": false,
+    "disableFallback": false,
+    "disableFallbackIfMatch": true,
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "1.1.1.1",
+      "1.0.0.1",
+      {
+        "address": "https://dns.dynx.pro/dns-query",
+        "domains": [
+          "youtubeadservice.com",
+          "adservice.google.com",
+          "googlesyndication.com",
+          "doubleclick.net"
+        ],
+        "skipFallback": true
+      }
+    ]
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 2,
+        "connIdle": 120,
+        "uplinkOnly": 4,
+        "downlinkOnly": 5,
+        "bufferSize": 16,
+        "statsUserUplink": true,
+        "statsUserDownlink": true,
+        "statsUserOnline": true
+      }
     },
-"dns": {
-  "queryStrategy": "UseIPv4v6:",
-  "disableCache": false,
-  "disableFallback": false,
-  "disableFallbackIfMatch": true,
-
-  "servers": [
-    "8.8.8.8",
-    "8.8.4.4",
-    "1.1.1.1",
-    "1.0.0.1",
-    {
-      "address": "https://dns.dynx.pro/dns-query",
-      "domains": [
-        "youtubeadservice.com",
-        "adservice.google.com",
-        "googlesyndication.com",
-        "doubleclick.net"
-      ],
-      "skipFallback": true
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundUplink": true,
+      "statsOutboundDownlink": true
     }
-  ]
-},
-    "policy": {
-        "levels": {
-            "0": {
-                "handshake": 2,
-                "connIdle": 120,
-                "uplinkOnly": 4,
-                "downlinkOnly": 5,
-                "bufferSize": 16,
-                "statsUserUplink": true,
-                "statsUserDownlink": true,
-                "statsUserOnline": true
-            }
-        },
-        "system": {
-            "statsInboundUplink": true,
-            "statsInboundDownlink": true,
-            "statsOutboundUplink": true,
-            "statsOutboundDownlink": true
-        }
-    },
-    "routing": {
-        "domainStrategy": "AsIs",
-        "rules": [
-  {
+  },
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
         "type": "field",
         "port": "53,853",
         "network": "tcp,udp",
@@ -59,7 +58,9 @@
       {
         "type": "field",
         "outboundTag": "block",
-        "protocol": ["bittorrent"]
+        "protocol": [
+          "bittorrent"
+        ]
       },
       {
         "type": "field",
@@ -67,26 +68,29 @@
         "port": "443,853",
         "outboundTag": "block"
       },
-     {
-  "type": "field",
-  "domain": [
-    "gemini.google.com",
-    "www.iconfinder.com",
-    "iconfinder.com",
-    "geosite:spotify",
-    "aistudio.google.com",
-    "labs.google",
-    "notebooklm.google"
-  ],
-  "outboundTag": "warp"
-},
       {
         "type": "field",
-        "ip": ["geoip:private"],
+        "domain": [
+          "gemini.google.com",
+          "www.iconfinder.com",
+          "iconfinder.com",
+          "geosite:spotify",
+          "aistudio.google.com",
+          "labs.google",
+          "notebooklm.google",
+          "one.google.com"
+        ],
+        "outboundTag": "warp"
+      },
+      {
+        "type": "field",
+        "ip": [
+          "geoip:private"
+        ],
         "outboundTag": "block"
       }
     ]
-   },
+  },
   "inbounds": [
     {
       "tag": "vmess",
@@ -143,55 +147,55 @@
         "tcpNoDelay": false
       }
     },
-                {
-            "tag": "VLESS+WS",
-            "listen": "0.0.0.0",
-            "port": 80,
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                    "acceptProxyProtocol": false,
-                    "path": "/",
-                    "host": "",
-                    "headers": {}
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
-                ],
-                "metadataOnly": true,
-                "routeOnly": true
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        },
+    {
+      "tag": "VLESS+WS",
+      "listen": "0.0.0.0",
+      "port": 80,
+      "protocol": "vless",
+      "settings": {
+        "clients": [],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+          "acceptProxyProtocol": false,
+          "path": "/",
+          "host": "",
+          "headers": {}
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic",
+          "fakedns"
+        ],
+        "metadataOnly": true,
+        "routeOnly": true
+      },
+      "sockopt": {
+        "mark": 0,
+        "tcpMaxSeg": 1420,
+        "tcpFastOpen": true,
+        "tproxy": "off",
+        "domainStrategy": "AsIs",
+        "dialerProxy": "",
+        "acceptProxyProtocol": false,
+        "tcpKeepAliveInterval": 0,
+        "tcpKeepAliveIdle": 100,
+        "tcpUserTimeout": 5000,
+        "tcpCongestion": "cubic",
+        "interface": "",
+        "v6only": false,
+        "tcpWindowClamp": 8000,
+        "tcpMptcp": false,
+        "tcpNoDelay": false
+      }
+    },
     {
       "tag": "VLESS+XHTTP+NONE+2065",
       "listen": "0.0.0.0",
@@ -243,133 +247,133 @@
         "tcpNoDelay": false
       }
     },
- {
-  "tag": "VLESS+TCP+REALITY+443",
-  "listen": "0.0.0.0",
-  "port": 443,
-  "protocol": "vless",
-  "settings": {
-    "clients": [],
-    "decryption": "none"
-  },
-  "streamSettings": {
-    "network": "tcp",
-    "security": "reality",
-    "tcpSettings": {
-      "acceptProxyProtocol": false,
-      "header": {
-        "type": "none"
+    {
+      "tag": "VLESS+TCP+REALITY+443",
+      "listen": "0.0.0.0",
+      "port": 443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "tcpSettings": {
+          "acceptProxyProtocol": false,
+          "header": {
+            "type": "none"
+          }
+        },
+        "realitySettings": {
+          "show": false,
+          "dest": "tgju.org:443",
+          "xver": 0,
+          "serverNames": [
+            "tgju.org"
+          ],
+          "privateKey": "5XUq75cXxzHNNH7Q6MfONEBSLywpltFBZ6aP9aX9fZ4",
+          "publicKey": "88FWmXpvHtmOBVjSHqB_UEmYcK0teFtxaS2ElH9E62E",
+          "shortIds": [
+            "f500e7d2ee299e25"
+          ],
+          "spiderX": "/generate_204",
+          "fingerprint": "firefox"
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic",
+          "fakedns"
+        ],
+        "metadataOnly": true,
+        "routeOnly": true
+      },
+      "sockopt": {
+        "mark": 0,
+        "tcpMaxSeg": 1420,
+        "tcpFastOpen": true,
+        "tproxy": "off",
+        "domainStrategy": "AsIs",
+        "dialerProxy": "",
+        "acceptProxyProtocol": false,
+        "tcpKeepAliveInterval": 0,
+        "tcpKeepAliveIdle": 100,
+        "tcpUserTimeout": 5000,
+        "tcpCongestion": "cubic",
+        "interface": "",
+        "v6only": false,
+        "tcpWindowClamp": 8000,
+        "tcpMptcp": false,
+        "tcpNoDelay": false
       }
     },
-    "realitySettings": {
-      "show": false,
-      "dest": "tgju.org:443",
-      "xver": 0,
-      "serverNames": [
-        "tgju.org"
-      ],
-      "privateKey": "5XUq75cXxzHNNH7Q6MfONEBSLywpltFBZ6aP9aX9fZ4",
-      "publicKey": "88FWmXpvHtmOBVjSHqB_UEmYcK0teFtxaS2ElH9E62E",
-      "shortIds": [
-        "f500e7d2ee299e25"
-      ],
-      "spiderX": "/generate_204",
-      "fingerprint": "firefox"
-    }
-  },
-  "sniffing": {
-    "enabled": true,
-    "destOverride": [
-      "http",
-      "tls",
-      "quic",
-      "fakedns"
-    ],
-    "metadataOnly": true,
-    "routeOnly": true
-},
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
+    {
+      "tag": "VLESS+TCP+NONE+2095",
+      "listen": "0.0.0.0",
+      "port": 2095,
+      "protocol": "vless",
+      "settings": {
+        "clients": [],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "none",
+        "tcpSettings": {
+          "acceptProxyProtocol": false,
+          "header": {
+            "type": "http",
+            "request": {
+              "version": "1.1",
+              "method": "GET",
+              "path": [
+                "/"
+              ],
+              "headers": {}
+            },
+            "response": {
+              "version": "1.1",
+              "status": "200",
+              "reason": "OK",
+              "headers": {}
             }
-        },
-{
-  "tag": "VLESS+TCP+NONE+2095",
-  "listen": "0.0.0.0",
-  "port": 2095,
-  "protocol": "vless",
-  "settings": {
-    "clients": [],
-    "decryption": "none"
-  },
-  "streamSettings": {
-    "network": "tcp",
-    "security": "none",
-    "tcpSettings": {
-      "acceptProxyProtocol": false,
-      "header": {
-        "type": "http",
-        "request": {
-          "version": "1.1",
-          "method": "GET",
-          "path": [
-            "/"
-          ],
-          "headers": {}
-        },
-        "response": {
-          "version": "1.1",
-          "status": "200",
-          "reason": "OK",
-          "headers": {}
+          }
         }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic",
+          "fakedns"
+        ],
+        "metadataOnly": true,
+        "routeOnly": true
+      },
+      "sockopt": {
+        "mark": 0,
+        "tcpMaxSeg": 1420,
+        "tcpFastOpen": true,
+        "tproxy": "off",
+        "domainStrategy": "AsIs",
+        "dialerProxy": "",
+        "acceptProxyProtocol": false,
+        "tcpKeepAliveInterval": 0,
+        "tcpKeepAliveIdle": 100,
+        "tcpUserTimeout": 5000,
+        "tcpCongestion": "cubic",
+        "interface": "",
+        "v6only": false,
+        "tcpWindowClamp": 8000,
+        "tcpMptcp": false,
+        "tcpNoDelay": false
       }
     }
-  },
-  "sniffing": {
-    "enabled": true,
-    "destOverride": [
-      "http",
-      "tls",
-      "quic",
-      "fakedns"
-    ],
-    "metadataOnly": true,
-    "routeOnly": true
-            },
-            "sockopt": {
-                "mark": 0,
-                "tcpMaxSeg": 1420,
-                "tcpFastOpen": true,
-                "tproxy": "off",
-                "domainStrategy": "AsIs",
-                "dialerProxy": "",
-                "acceptProxyProtocol": false,
-                "tcpKeepAliveInterval": 0,
-                "tcpKeepAliveIdle": 100,
-                "tcpUserTimeout": 5000,
-                "tcpCongestion": "cubic",
-                "interface": "",
-                "v6only": false,
-                "tcpWindowClamp": 8000,
-                "tcpMptcp": false,
-                "tcpNoDelay": false
-            }
-        }
   ],
   "outbounds": [
     {
