@@ -78,7 +78,8 @@
           "aistudio.google.com",
           "labs.google",
           "notebooklm.google",
-          "one.google.com"
+          "one.google.com",
+          "generativelanguage.googleapis.com"
         ],
         "outboundTag": "warp"
       },
