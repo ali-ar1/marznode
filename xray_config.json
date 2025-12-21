@@ -71,7 +71,7 @@
           {
             "type": "field",
             "inboundTag": [
-              "VLESS+TCP+REALITY+443"
+              "VLESS+TCP+REALITY+ADblocker"
             ],
             "outboundTag": "ADblocker"
           },
@@ -235,6 +235,70 @@
         ],
         "metadataOnly": false,
         "routeOnly": false
+      },
+      "sockopt": {
+        "mark": 0,
+        "tcpMaxSeg": 1420,
+        "tcpFastOpen": true,
+        "tproxy": "off",
+        "domainStrategy": "AsIs",
+        "dialerProxy": "",
+        "acceptProxyProtocol": false,
+        "tcpKeepAliveInterval": 0,
+        "tcpKeepAliveIdle": 100,
+        "tcpUserTimeout": 5000,
+        "tcpCongestion": "cubic",
+        "interface": "",
+        "v6only": false,
+        "tcpWindowClamp": 8000,
+        "tcpMptcp": false,
+        "tcpNoDelay": false
+      }
+    },
+    {
+      "tag": "VLESS+TCP+REALITY+ADblocker",
+      "listen": "0.0.0.0",
+      "port": 2053,
+      "protocol": "vless",
+      "settings": {
+        "clients": [],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "tcpSettings": {
+          "acceptProxyProtocol": false,
+          "header": {
+            "type": "none"
+          }
+        },
+        "realitySettings": {
+          "show": false,
+          "dest": "tgju.org:443",
+          "xver": 0,
+          "serverNames": [
+            "tgju.org"
+          ],
+          "privateKey": "5XUq75cXxzHNNH7Q6MfONEBSLywpltFBZ6aP9aX9fZ4",
+          "publicKey": "88FWmXpvHtmOBVjSHqB_UEmYcK0teFtxaS2ElH9E62E",
+          "shortIds": [
+            "f500e7d2ee299e25"
+          ],
+          "spiderX": "/generate_204",
+          "fingerprint": "firefox"
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic",
+          "fakedns"
+        ],
+        "metadataOnly": true,
+        "routeOnly": true
       },
       "sockopt": {
         "mark": 0,
