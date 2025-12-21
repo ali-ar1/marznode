@@ -479,7 +479,7 @@
         "publicKey": "q+UBP4LnpIU9EBHBw1QdAddxiGeQWUtRH6zzg5Fp3GQ=",
         "endpoint": "slc-442-wg.whiskergalaxy.com:443",
         "preSharedKey": "IGUgrmS/jgTaMOd4PMLoJap1212bIsXy4i2C5Oa+eFg=",
-        "keepAlive": 300
+        "keepAlive": 15
       }
     ],
     "kernelMode": false,
