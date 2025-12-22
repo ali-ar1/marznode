@@ -467,18 +467,18 @@
   "tag": "ADblocker",
   "protocol": "wireguard",
   "settings": {
-    "secretKey": "qH/400rblgPcAvWFCfweStgfL6ezQhg+rCMHd873808=",
+    "secretKey": "WOw2QlEk+I1pAD18AeWIQ6hhX4Ko2sfvLMPpdJ7Kt18=",
     "DNS": [
       "10.255.255.2"
     ],
     "address": [
-      "100.115.23.83"
+      "100.121.179.60"
     ],
     "peers": [
       {
-        "publicKey": "q+UBP4LnpIU9EBHBw1QdAddxiGeQWUtRH6zzg5Fp3GQ=",
-        "endpoint": "slc-442-wg.whiskergalaxy.com:443",
-        "preSharedKey": "IGUgrmS/jgTaMOd4PMLoJap1212bIsXy4i2C5Oa+eFg=",
+        "publicKey": "/8WvGXPoWTiPmrQsmakiEk7wFhn0ab7FWqN5k13oszQ=",
+        "endpoint": "tia-283-wg.whiskergalaxy.com:443",
+        "preSharedKey": "L4yg436feejWalgtrJzOBJUgufonFuMjgWFaS4pgODQ=",
         "keepAlive": 30
       }
     ],
