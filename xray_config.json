@@ -156,6 +156,195 @@
       }
     },
     {
+  "tag": "VLESS+TCP+NONE+2086",
+  "listen": "0.0.0.0",
+  "port": 2086,
+  "protocol": "vless",
+  "settings": {
+    "clients": [],
+    "decryption": "none"
+  },
+  "streamSettings": {
+    "network": "tcp",
+    "security": "none",
+    "tcpSettings": {
+      "acceptProxyProtocol": false,
+      "header": {
+        "type": "http",
+        "request": {
+          "version": "1.1",
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "headers": {}
+        },
+        "response": {
+          "version": "1.1",
+          "status": "200",
+          "reason": "OK",
+          "headers": {}
+        }
+      }
+    }
+  },
+  "sniffing": {
+    "enabled": true,
+    "destOverride": [
+      "http",
+      "tls",
+      "quic",
+      "fakedns"
+    ],
+    "metadataOnly": true,
+    "routeOnly": true
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
+            }
+        },
+        {
+  "tag": "VLESS+TCP+NONE+2052",
+  "listen": "0.0.0.0",
+  "port": 2052,
+  "protocol": "vless",
+  "settings": {
+    "clients": [],
+    "decryption": "none"
+  },
+  "streamSettings": {
+    "network": "tcp",
+    "security": "none",
+    "tcpSettings": {
+      "acceptProxyProtocol": false,
+      "header": {
+        "type": "http",
+        "request": {
+          "version": "1.1",
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "headers": {}
+        },
+        "response": {
+          "version": "1.1",
+          "status": "200",
+          "reason": "OK",
+          "headers": {}
+        }
+      }
+    }
+  },
+  "sniffing": {
+    "enabled": true,
+    "destOverride": [
+      "http",
+      "tls",
+      "quic",
+      "fakedns"
+    ],
+    "metadataOnly": true,
+    "routeOnly": true
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
+            }
+        },
+        {
+  "tag": "VLESS+TCP+NONE+8080",
+  "listen": "0.0.0.0",
+  "port": 8080,
+  "protocol": "vless",
+  "settings": {
+    "clients": [],
+    "decryption": "none"
+  },
+  "streamSettings": {
+    "network": "tcp",
+    "security": "none",
+    "tcpSettings": {
+      "acceptProxyProtocol": false,
+      "header": {
+        "type": "http",
+        "request": {
+          "version": "1.1",
+          "method": "GET",
+          "path": [
+            "/"
+          ],
+          "headers": {}
+        },
+        "response": {
+          "version": "1.1",
+          "status": "200",
+          "reason": "OK",
+          "headers": {}
+        }
+      }
+    }
+  },
+  "sniffing": {
+    "enabled": true,
+    "destOverride": [
+      "http",
+      "tls",
+      "quic",
+      "fakedns"
+    ],
+    "metadataOnly": true,
+    "routeOnly": true
+            },
+            "sockopt": {
+                "mark": 0,
+                "tcpMaxSeg": 1420,
+                "tcpFastOpen": true,
+                "tproxy": "off",
+                "domainStrategy": "AsIs",
+                "dialerProxy": "",
+                "acceptProxyProtocol": false,
+                "tcpKeepAliveInterval": 0,
+                "tcpKeepAliveIdle": 100,
+                "tcpUserTimeout": 5000,
+                "tcpCongestion": "cubic",
+                "interface": "",
+                "v6only": false,
+                "tcpWindowClamp": 8000,
+                "tcpMptcp": false,
+                "tcpNoDelay": false
+            }
+        },
+    {
       "tag": "VLESS+WS",
       "listen": "0.0.0.0",
       "port": 80,
