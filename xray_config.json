@@ -68,13 +68,6 @@
         "port": "443,853",
         "outboundTag": "block"
       },
-          {
-            "type": "field",
-            "inboundTag": [
-              "VLESS+TCP+REALITY+ADblocker"
-            ],
-            "outboundTag": "ADblocker"
-          },
       {
         "type": "field",
         "domain": [
@@ -652,30 +645,6 @@
       "protocol": "blackhole",
       "tag": "block"
     },
-    {
-  "tag": "ADblocker",
-  "protocol": "wireguard",
-  "settings": {
-    "secretKey": "WOw2QlEk+I1pAD18AeWIQ6hhX4Ko2sfvLMPpdJ7Kt18=",
-    "DNS": [
-      "10.255.255.2"
-    ],
-    "address": [
-      "100.121.179.60"
-    ],
-    "peers": [
-      {
-        "publicKey": "/8WvGXPoWTiPmrQsmakiEk7wFhn0ab7FWqN5k13oszQ=",
-        "endpoint": "tia-283-wg.whiskergalaxy.com:443",
-        "preSharedKey": "L4yg436feejWalgtrJzOBJUgufonFuMjgWFaS4pgODQ=",
-        "keepAlive": 30
-      }
-    ],
-    "kernelMode": false,
-    "domainStrategy": "ForceIPv4",
-    "mtu": 1280
-  }
-},
     {
       "protocol": "socks",
       "settings": {
